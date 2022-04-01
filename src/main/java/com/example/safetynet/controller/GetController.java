@@ -1,5 +1,6 @@
-package com.ocprojet5.safetynet.controller;
+package com.example.safetynet.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,22 +11,25 @@ public class GetController {
     
     @GetMapping("/firestation")
     public ResponseEntity<String> fireStation(@RequestParam int stationNumber){
-        
-        return new ResponseEntity<>(null);
+        //Insert Method
+        return new ResponseEntity<String>("firestations" + stationNumber, HttpStatus.OK);
     }
 
     @GetMapping("/childAlert")
-    public String childAlert(@RequestParam String adress){
-        return "Exemple:"+ adress;
+    public ResponseEntity<String> childAlert(@RequestParam String adress){
+        //Insert Method
+        return new ResponseEntity<String>("ChildAlert" + adress, HttpStatus.OK);
     }
 
     @GetMapping("/phoneAlert")
-    public String phoneAlert(@RequestParam int firestation){
-        return "Exemple:"+ firestation;
+    public ResponseEntity<String> phoneAlert(@RequestParam int firestation){
+        //Insert Method
+        return new ResponseEntity<String>("phoneAlert"+ firestation, HttpStatus.OK);
     }
 
     @GetMapping("/fire")
-    public String fire(@RequestParam String adress){
-        return "Exemple:"+ adress;
+    public ResponseEntity<String> fire(@RequestParam String adress){
+        //Insert Method
+        return new ResponseEntity<String>("fire" + adress, HttpStatus.OK);
     }
 }
