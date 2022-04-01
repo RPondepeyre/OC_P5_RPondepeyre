@@ -1,8 +1,8 @@
-package com.ocprojet5.safetynet.repository;
+package com.example.safetynet.repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ocprojet5.safetynet.model.Firestation;
+import com.example.safetynet.model.Firestation;
 import org.springframework.stereotype.Repository;
 
 @Repository

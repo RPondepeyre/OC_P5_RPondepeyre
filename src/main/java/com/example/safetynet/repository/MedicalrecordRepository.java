@@ -1,8 +1,8 @@
-package com.ocprojet5.safetynet.repository;
+package com.example.safetynet.repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ocprojet5.safetynet.model.Medicalrecord;
+import com.example.safetynet.repository.safetynet.model.Medicalrecord;
 
 import org.springframework.stereotype.Repository;
 
