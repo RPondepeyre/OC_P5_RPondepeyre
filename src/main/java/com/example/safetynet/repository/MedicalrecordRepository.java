@@ -2,7 +2,7 @@ package com.example.safetynet.repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.safetynet.repository.safetynet.model.Medicalrecord;
+import com.example.safetynet.model.Medicalrecord;
 
 import org.springframework.stereotype.Repository;
 
