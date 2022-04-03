@@ -48,7 +48,7 @@ public class InitDataConfig {
 
         try{
             medicalrecords.save(getData.getMedicalrecords());
-            logger.info("Persons loaded");
+            logger.info("Medical records loaded");
         }catch(Exception e){   
             logger.error("Can't load Medical records, error occured");
         }

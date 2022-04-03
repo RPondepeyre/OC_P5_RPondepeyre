@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.example.safetynet.model.Person;
 import com.example.safetynet.service.SortDataService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

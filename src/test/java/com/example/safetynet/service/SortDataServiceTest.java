@@ -25,9 +25,9 @@ public void findPersonsbystationtest()
 
 @Test
 public void personAgeTest(){
-    Person connard = personsRepository.persons.get(0);
+    Person person = personsRepository.persons.get(0);
 
-    service.personAge(connard);
+    service.personAge(person);
 }
     
 }
