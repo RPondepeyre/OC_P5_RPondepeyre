@@ -1,5 +1,12 @@
 package com.example.safetynet.controller;
 
+import java.util.List;
+
+import com.example.safetynet.model.Person;
+import com.example.safetynet.service.SortDataService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GetController {
     
+    @Autowired
+    SortDataService service;
+
+
+
     //localhost:8080/firestation?stationNumber=<station_number>
     @GetMapping("/firestation")
-    public ResponseEntity<String> fireStation(@RequestParam int stationNumber){
-        //Insert Method
-        return new ResponseEntity<>("firestations" + stationNumber, HttpStatus.OK);
+    public ResponseEntity<List<Person>> fireStation(@RequestParam int stationNumber){
+        return new ResponseEntity<>(service.findPersonsbystation(stationNumber), HttpStatus.OK);
     }
 
     //localhost:8080/childAlert?address=<address>
