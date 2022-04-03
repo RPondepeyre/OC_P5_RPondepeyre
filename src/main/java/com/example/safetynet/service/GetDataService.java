@@ -16,12 +16,17 @@ import com.example.safetynet.repository.FirestationsRepository;
 import com.example.safetynet.repository.MedicalrecordRepository;
 import com.example.safetynet.repository.PersonsRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GetDataService {
+
+    
+    private static final Logger logger = LoggerFactory.getLogger(GetDataService.class);
 
     @Autowired
     FirestationsRepository firestationRepository;
@@ -57,7 +62,7 @@ public class GetDataService {
                 firestations.add(firestation);
             }
         }else{
-            //TODO Mettre un logger.error
+            logger.error("No firestations found");
         }
         return firestations;    
         }
@@ -67,7 +72,7 @@ public class GetDataService {
         JsonNode root = getRoot();
  
         JsonNode array = root.get("persons");
-        List<Person> persons = new ArrayList<Person>();
+        List<Person> persons = new ArrayList<>();
         if(array.isArray()){
             for(JsonNode jsonNode: array){
                 Person person = new Person();
@@ -82,7 +87,7 @@ public class GetDataService {
                 persons.add(person);
             }
         }else{
-            //TODO Mettre un logger.error
+            logger.error("No persons found");
         }
         return persons;    
         }
@@ -92,7 +97,7 @@ public class GetDataService {
             JsonNode root = getRoot();
      
             JsonNode array = root.get("medicalrecords");
-            List<Medicalrecord> medicalrecords = new ArrayList<Medicalrecord>();
+            List<Medicalrecord> medicalrecords = new ArrayList<>();
             if(array.isArray()){
                 for(JsonNode jsonNode: array){
                     Medicalrecord medicalrecord = new Medicalrecord();
@@ -100,14 +105,14 @@ public class GetDataService {
                     medicalrecord.setLastName(jsonNode.get("lastName").asText());
                     medicalrecord.setBirthdate(LocalDate.parse(jsonNode.get("birthdate").asText(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
                     JsonNode medications = jsonNode.get("medications");
-                    List<String> medicationList = new ArrayList<String>();
+                    List<String> medicationList = new ArrayList<>();
                         for(JsonNode medsnode: medications)
                         {
                             medicationList.add(medsnode.asText());
                         }
                     medicalrecord.setMedications(medicationList);
                     JsonNode allergies = jsonNode.get("allergies");
-                    List<String> allergiesList = new ArrayList<String>();
+                    List<String> allergiesList = new ArrayList<>();
                         for(JsonNode allergienode: allergies)
                         {
                             medicationList.add(allergienode.asText());
@@ -116,7 +121,7 @@ public class GetDataService {
                     medicalrecords.add(medicalrecord);
                 }
             }else{
-                //TODO Mettre un logger.error
+                logger.error("No medical records found");
             }
             return medicalrecords;    
             }
