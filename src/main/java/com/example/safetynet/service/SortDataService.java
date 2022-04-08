@@ -33,9 +33,21 @@ public class SortDataService {
     MedicalrecordRepository medicalrecordRepository;
 
     public List<Person> findPersonsbystation(int stationIn){
+      //On veut récupérer toutes les personnes pour une station
+      //on sait une station elle a plusieurs adresses
+      //une personne a une addresse
+
+      //
+  //  List<Person> residents = firestationRepository.getFirestationsByStations(stationIn).stream()
+  //  .map(Firestation::getAdress)
+ //   .flatMap(address ->).collect(Collectors.toList personsRepository.findByAddress(address)());
+
+    //.flatMap(address -> personsRepository.findByAddress(address).stream().collect(Collectors.toList()));
+      
       Predicate<Firestation> byStation = firestation -> firestation.getStation() == stationIn;
       List<Firestation> fs = firestationRepository.firestations.stream().filter(byStation).collect(Collectors.toList());
       List<Person> result = new ArrayList<>();
+    
         for(int i=0; i< fs.size(); i++){
           int y = i;
           Predicate<Person> byAdress = person -> person.getAdress().equals(fs.get(y).getAdress());

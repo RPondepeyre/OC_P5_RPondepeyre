@@ -3,7 +3,7 @@ package com.example.safetynet.model;
 public class Firestation {
 
     private String adress;
-    private int station;
+    private Integer station;
 
 
     public String getAdress() {
@@ -14,11 +14,11 @@ public class Firestation {
         this.adress = adress;
     }
 
-    public int getStation() {
+    public Integer getStation() {
         return this.station;
     }
 
-    public void setStation(int station) {
+    public void setStation(Integer station) {
         this.station = station;
     }
 }

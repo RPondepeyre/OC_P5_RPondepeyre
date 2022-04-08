@@ -16,6 +16,9 @@ public class MedicalrecordRepository {
         this.medicalrecords = medicalrecords;
     }
     
+    public void addMedicalRecord(Medicalrecord medicalrecord){
+        this.medicalrecords.add(medicalrecord);
+    }
 
     
 }

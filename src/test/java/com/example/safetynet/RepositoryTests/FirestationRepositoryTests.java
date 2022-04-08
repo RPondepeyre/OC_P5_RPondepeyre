@@ -19,7 +19,6 @@ public class FirestationRepositoryTests {
     @Test
     public  void saveNormalTest(){
         List<Firestation> fs = new ArrayList<>();
-
         firestationsRepository.save(fs);
     }
 }
