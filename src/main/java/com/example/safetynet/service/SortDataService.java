@@ -1,7 +1,6 @@
 package com.example.safetynet.service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -9,9 +8,6 @@ import java.util.stream.Collectors;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.model.Medicalrecord;
 import com.example.safetynet.model.Person;
-import com.example.safetynet.repository.FirestationsRepository;
-import com.example.safetynet.repository.MedicalrecordRepository;
-import com.example.safetynet.repository.PersonsRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,42 +20,25 @@ public class SortDataService {
   private static final Logger logger = LoggerFactory.getLogger(SortDataService.class);
 
     @Autowired
-    FirestationsRepository firestationRepository;
+    FirestationService firestationService;
 
     @Autowired
-    PersonsRepository personsRepository;
+    PersonService personService;
 
     @Autowired
-    MedicalrecordRepository medicalrecordRepository;
+    MedicalrecordService medicalrecordService;
 
     public List<Person> findPersonsbystation(int stationIn){
-      //On veut récupérer toutes les personnes pour une station
-      //on sait une station elle a plusieurs adresses
-      //une personne a une addresse
-
-      //
-  //  List<Person> residents = firestationRepository.getFirestationsByStations(stationIn).stream()
-  //  .map(Firestation::getAdress)
- //   .flatMap(address ->).collect(Collectors.toList personsRepository.findByAddress(address)());
-
-    //.flatMap(address -> personsRepository.findByAddress(address).stream().collect(Collectors.toList()));
-      
-      Predicate<Firestation> byStation = firestation -> firestation.getStation() == stationIn;
-      List<Firestation> fs = firestationRepository.firestations.stream().filter(byStation).collect(Collectors.toList());
-      List<Person> result = new ArrayList<>();
-    
-        for(int i=0; i< fs.size(); i++){
-          int y = i;
-          Predicate<Person> byAdress = person -> person.getAdress().equals(fs.get(y).getAdress());
-          result.addAll(personsRepository.persons.stream().filter(byAdress).collect(Collectors.toList()));
-          }
-      return result;
-      
+      return firestationService.findByStation(stationIn).stream()
+      .map(Firestation::getAdress)
+      .flatMap(adress -> personService.findByAdress(adress).stream())
+      .collect(Collectors.toList());
     }
+
 
     public int personAge(Person person){
       Predicate<Medicalrecord> byName = medicalrecord -> medicalrecord.getFirstName().equals(person.getFirstName()) && medicalrecord.getLastName().equals(person.getLastName());
-      List<Medicalrecord> mrs = medicalrecordRepository.medicalrecords.stream().filter(byName).collect(Collectors.toList());
+      List<Medicalrecord> mrs = medicalrecordService.findAllMedicalRecords().stream().filter(byName).collect(Collectors.toList());
       Medicalrecord medicalrecord = new Medicalrecord();
         if(mrs.size() == 1){
           medicalrecord = mrs.get(0);
@@ -90,10 +69,5 @@ public class SortDataService {
       }
       return children;
     }
-
-    //Get1: Liste de personnes couvertes par la caserne de pompiers correspondante au paramêtre (ID)
-    //Prénom, Nom, Adresse, téléphone, + décompte du nombre d'adultes et d'enfants dans la zone
-
-
     
 }

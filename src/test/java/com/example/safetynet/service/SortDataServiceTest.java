@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class SortDataServiceTest {
 
     @Autowired
-    SortDataService service;
+    PersonsbyFirestationService service;
     
     @Autowired
     PersonsRepository personsRepository;
@@ -19,15 +19,12 @@ public class SortDataServiceTest {
 @Test
 public void findPersonsbystationtest()
 {
-   service.findPersonsbystation(1);
+   //service.findPersonsbystation(1);
 
 }
 
 @Test
 public void personAgeTest(){
-    Person person = personsRepository.persons.get(0);
-
-    service.personAge(person);
 }
     
 }
