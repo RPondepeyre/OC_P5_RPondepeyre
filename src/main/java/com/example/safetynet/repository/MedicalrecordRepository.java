@@ -10,12 +10,21 @@ import org.springframework.stereotype.Repository;
 public class MedicalrecordRepository {
 
 
-    public List<Medicalrecord> medicalrecords = new ArrayList<>();
+    private List<Medicalrecord> medicalrecords = new ArrayList<>();
 
     public void save(List<Medicalrecord> medicalrecords){
         this.medicalrecords = medicalrecords;
     }
     
+    public void add(Medicalrecord medicalrecord){
+        this.medicalrecords.add(medicalrecord);
+    }
+
+    public List<Medicalrecord> getAll(){
+        return this.medicalrecords;
+    }
+
+
 
     
 }

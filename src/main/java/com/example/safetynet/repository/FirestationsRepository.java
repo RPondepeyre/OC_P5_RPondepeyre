@@ -6,16 +6,21 @@ import com.example.safetynet.model.Firestation;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class FirestationsRepository {
+public class FirestationsRepository{
 
-public List<Firestation> firestations = new ArrayList<>();
+private List<Firestation> firestations = new ArrayList<>();
 
 public void save(List<Firestation> firestations){
     this.firestations = firestations;
 }
 
+public void add(Firestation firestation){
+    this.firestations.add(firestation);
+}
 
-
+public List<Firestation> getAll(){
+    return this.firestations;
+}
     
     
 }

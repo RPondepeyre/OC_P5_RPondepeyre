@@ -1,9 +1,12 @@
 package com.example.safetynet.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.example.safetynet.DTO.PersonsDTO;
+import com.example.safetynet.DTO.PersonsbyFirestationsDTO;
 import com.example.safetynet.model.Person;
-import com.example.safetynet.service.SortDataService;
+import com.example.safetynet.service.PersonsbyFirestationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,15 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class GetController {
     
     @Autowired
-    SortDataService service;
+    PersonsbyFirestationService service;
 
 
 
     //localhost:8080/firestation?stationNumber=<station_number>
     @GetMapping("/firestation")
-    public ResponseEntity<List<Person>> fireStation(@RequestParam int stationNumber){
-        return new ResponseEntity<>(service.findPersonsbystation(stationNumber), HttpStatus.OK);
+    public ResponseEntity<?> fireStation(@RequestParam int stationNumber){
+        PersonsbyFirestationsDTO result = service.personsbyFirestationDTO(stationNumber);
+        if(result != null){
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("La station mentionnée n'existe pas", HttpStatus.NOT_FOUND);
+        }
     }
+
 
     //localhost:8080/childAlert?address=<address>
     @GetMapping("/childAlert")
