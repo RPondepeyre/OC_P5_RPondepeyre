@@ -43,12 +43,14 @@ public class SortDataService {
     Medicalrecord medicalrecord = new Medicalrecord();
     if (mrs.size() == 1) {
       medicalrecord = mrs.get(0);
+      return LocalDate.now().compareTo(medicalrecord.getBirthdate());
     } else if (mrs.isEmpty()) {
       logger.error("No Medical Record found for this person");
+      return 0;
     } else {
       logger.error("Multiple persons with this firstname and lastname combination founded");
+      return 0;
     }
-    return LocalDate.now().compareTo(medicalrecord.getBirthdate());
   }
 
   public int adultNumber(List<Person> persons) {
