@@ -11,23 +11,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FirestationService {
-    
+
     @Autowired
     FirestationsRepository repository;
 
-    public List<Firestation> findAllFirestations(){
+    public List<Firestation> findAllFirestations() {
         return repository.getAll();
     }
 
     public List<Firestation> findByStation(Integer station) {
         return repository.getAll().stream().filter(firestation -> firestation.getStation().equals(station))
-        .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
-    
+
     public List<Firestation> findByAdress(String adress) {
         return repository.getAll().stream().filter(firestation -> firestation.getAdress().equals(adress))
-        .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
-    
 
 }

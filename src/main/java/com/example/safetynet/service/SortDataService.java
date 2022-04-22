@@ -19,55 +19,58 @@ public class SortDataService {
 
   private static final Logger logger = LoggerFactory.getLogger(SortDataService.class);
 
-    @Autowired
-    FirestationService firestationService;
+  @Autowired
+  FirestationService firestationService;
 
-    @Autowired
-    PersonService personService;
+  @Autowired
+  PersonService personService;
 
-    @Autowired
-    MedicalrecordService medicalrecordService;
+  @Autowired
+  MedicalrecordService medicalrecordService;
 
-    public List<Person> findPersonsbystation(int stationIn){
-      return firestationService.findByStation(stationIn).stream()
-      .map(Firestation::getAdress)
-      .flatMap(adress -> personService.findByAdress(adress).stream())
-      .collect(Collectors.toList());
+  public List<Person> findPersonsbystation(int stationIn) {
+    return firestationService.findByStation(stationIn).stream()
+        .map(Firestation::getAdress)
+        .flatMap(adress -> personService.findByAdress(adress).stream())
+        .collect(Collectors.toList());
+  }
+
+  public int personAge(Person person) {
+    Predicate<Medicalrecord> byName = medicalrecord -> medicalrecord.getFirstName().equals(person.getFirstName())
+        && medicalrecord.getLastName().equals(person.getLastName());
+    List<Medicalrecord> mrs = medicalrecordService.findAllMedicalRecords().stream().filter(byName)
+        .collect(Collectors.toList());
+    Medicalrecord medicalrecord = new Medicalrecord();
+    if (mrs.size() == 1) {
+      medicalrecord = mrs.get(0);
+      return LocalDate.now().compareTo(medicalrecord.getBirthdate());
+    } else if (mrs.isEmpty()) {
+      logger.error("No Medical Record found for this person");
+      return 0;
+    } else {
+      logger.error("Multiple persons with this firstname and lastname combination founded");
+      return 0;
     }
+  }
 
-
-    public int personAge(Person person){
-      Predicate<Medicalrecord> byName = medicalrecord -> medicalrecord.getFirstName().equals(person.getFirstName()) && medicalrecord.getLastName().equals(person.getLastName());
-      List<Medicalrecord> mrs = medicalrecordService.findAllMedicalRecords().stream().filter(byName).collect(Collectors.toList());
-      Medicalrecord medicalrecord = new Medicalrecord();
-        if(mrs.size() == 1){
-          medicalrecord = mrs.get(0);
-        }else if(mrs.isEmpty()){
-          logger.error("No Medical Record found for this person");
-        }else{
-          logger.error("Multiple persons with this firstname and lastname combination founded");
-        }
-        return LocalDate.now().compareTo(medicalrecord.getBirthdate());
-    }
-
-    public int adultNumber(List<Person> persons){
-      int adults = 0;
-      for (Person person : persons) {
-        if(personAge(person)>18){
-          adults++;
-        }
+  public int adultNumber(List<Person> persons) {
+    int adults = 0;
+    for (Person person : persons) {
+      if (personAge(person) > 18) {
+        adults++;
       }
-      return adults;
     }
+    return adults;
+  }
 
-    public int childNumber(List<Person> persons){
-      int children = 0;
-      for (Person person : persons) {
-        if(personAge(person)<18){
-          children++;
-        }
+  public int childNumber(List<Person> persons) {
+    int children = 0;
+    for (Person person : persons) {
+      if (personAge(person) < 18) {
+        children++;
       }
-      return children;
     }
-    
+    return children;
+  }
+
 }

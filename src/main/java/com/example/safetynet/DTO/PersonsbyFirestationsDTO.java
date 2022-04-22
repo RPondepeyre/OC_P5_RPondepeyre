@@ -1,4 +1,5 @@
 package com.example.safetynet.DTO;
+
 import java.util.List;
 
 public class PersonsbyFirestationsDTO {
