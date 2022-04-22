@@ -5,7 +5,6 @@ public class Firestation {
     private String adress;
     private Integer station;
 
-
     public String getAdress() {
         return this.adress;
     }

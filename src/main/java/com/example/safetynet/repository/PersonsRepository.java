@@ -10,18 +10,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PersonsRepository {
 
-
     private List<Person> persons = new ArrayList<>();
 
-    public void save(List<Person> persons){
+    public void save(List<Person> persons) {
         this.persons = persons;
     }
-        
-    public void add(Person person){
+
+    public void add(Person person) {
         this.persons.add(person);
     }
 
-    public List<Person> getAll(){
+    public List<Person> getAll() {
         return this.persons;
     }
 }

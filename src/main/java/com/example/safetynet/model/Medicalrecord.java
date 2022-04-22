@@ -49,6 +49,8 @@ public class Medicalrecord {
     public void setAllergies(List<String> allergies) {
         this.allergies = allergies;
     }
-    
+
 }
-// "firstName": "John", "lastName": "Boyd", "birthdate": "03/06/1984", "medications": ["aznol:350mg", "hydrapermazol:100mg"], "allergies": ["nillacilan"] 
+// "firstName": "John", "lastName": "Boyd", "birthdate": "03/06/1984",
+// "medications": ["aznol:350mg", "hydrapermazol:100mg"], "allergies":
+// ["nillacilan"]

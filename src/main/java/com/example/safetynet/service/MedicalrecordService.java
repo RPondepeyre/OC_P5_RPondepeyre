@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MedicalrecordService {
-    
+
     @Autowired
     MedicalrecordRepository repository;
 
-    public List<Medicalrecord> findAllMedicalRecords(){
+    public List<Medicalrecord> findAllMedicalRecords() {
         return repository.getAll();
     }
 

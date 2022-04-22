@@ -7,74 +7,57 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.model.Medicalrecord;
 import com.example.safetynet.model.Person;
-import com.example.safetynet.repository.FirestationsRepository;
-import com.example.safetynet.repository.MedicalrecordRepository;
-import com.example.safetynet.repository.PersonsRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GetDataService {
 
-    
+    private ObjectMapper objectmapper = new ObjectMapper();
+
     private static final Logger logger = LoggerFactory.getLogger(GetDataService.class);
 
-    @Autowired
-    FirestationsRepository firestationRepository;
+    public JsonNode getRoot(String pathname) throws IOException {
 
-    @Autowired
-    PersonsRepository personsRepository;
-
-    @Autowired
-    MedicalrecordRepository medicalrecordsRepository;
-
-    @Value("${datapath}")
-    private String pathname;
-
-    public JsonNode getRoot() throws IOException{
-        
         File file = new File(pathname);
-        ObjectMapper objectmapper = new ObjectMapper();
         return objectmapper.readTree(file);
 
     }
 
-    public List<Firestation> getFirestations() throws IOException{
-     
-        JsonNode root = getRoot();
+    public List<Firestation> getFirestations(String pathname) throws IOException {
+
+        JsonNode root = getRoot(pathname);
 
         JsonNode array = root.get("firestations");
         List<Firestation> firestations = new ArrayList<>();
-        if(array.isArray()){
-            for(JsonNode jsonNode: array){
+        if (array.isArray()) {
+            for (JsonNode jsonNode : array) {
                 Firestation firestation = new Firestation();
                 firestation.setAdress(jsonNode.get("address").asText());
                 firestation.setStation(jsonNode.get("station").asInt());
                 firestations.add(firestation);
             }
-        }else{
+        } else {
             logger.error("No firestations found");
         }
-        return firestations;    
-        }
-    
-    public List<Person> getPersons() throws IOException{
+        return firestations;
+    }
 
-        JsonNode root = getRoot();
- 
+    public List<Person> getPersons(String pathname) throws IOException {
+
+        JsonNode root = getRoot(pathname);
+
         JsonNode array = root.get("persons");
         List<Person> persons = new ArrayList<>();
-        if(array.isArray()){
-            for(JsonNode jsonNode: array){
+        if (array.isArray()) {
+            for (JsonNode jsonNode : array) {
                 Person person = new Person();
                 person.setFirstName(jsonNode.get("firstName").asText());
                 person.setLastName(jsonNode.get("lastName").asText());
@@ -86,44 +69,43 @@ public class GetDataService {
 
                 persons.add(person);
             }
-        }else{
+        } else {
             logger.error("No persons found");
         }
-        return persons;    
-        }
+        return persons;
+    }
 
-        public List<Medicalrecord> getMedicalrecords() throws IOException{
+    public List<Medicalrecord> getMedicalrecords(String pathname) throws IOException {
 
-            JsonNode root = getRoot();
-     
-            JsonNode array = root.get("medicalrecords");
-            List<Medicalrecord> medicalrecords = new ArrayList<>();
-            if(array.isArray()){
-                for(JsonNode jsonNode: array){
-                    Medicalrecord medicalrecord = new Medicalrecord();
-                    medicalrecord.setFirstName(jsonNode.get("firstName").asText());
-                    medicalrecord.setLastName(jsonNode.get("lastName").asText());
-                    medicalrecord.setBirthdate(LocalDate.parse(jsonNode.get("birthdate").asText(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
-                    JsonNode medications = jsonNode.get("medications");
-                    List<String> medicationList = new ArrayList<>();
-                        for(JsonNode medsnode: medications)
-                        {
-                            medicationList.add(medsnode.asText());
-                        }
-                    medicalrecord.setMedications(medicationList);
-                    JsonNode allergies = jsonNode.get("allergies");
-                    List<String> allergiesList = new ArrayList<>();
-                        for(JsonNode allergienode: allergies)
-                        {
-                            medicationList.add(allergienode.asText());
-                        }
-                    medicalrecord.setAllergies(allergiesList);
-                    medicalrecords.add(medicalrecord);
+        JsonNode root = getRoot(pathname);
+
+        JsonNode array = root.get("medicalrecords");
+        List<Medicalrecord> medicalrecords = new ArrayList<>();
+        if (array.isArray()) {
+            for (JsonNode jsonNode : array) {
+                Medicalrecord medicalrecord = new Medicalrecord();
+                medicalrecord.setFirstName(jsonNode.get("firstName").asText());
+                medicalrecord.setLastName(jsonNode.get("lastName").asText());
+                medicalrecord.setBirthdate(
+                        LocalDate.parse(jsonNode.get("birthdate").asText(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+                JsonNode medications = jsonNode.get("medications");
+                List<String> medicationList = new ArrayList<>();
+                for (JsonNode medsnode : medications) {
+                    medicationList.add(medsnode.asText());
                 }
-            }else{
-                logger.error("No medical records found");
+                medicalrecord.setMedications(medicationList);
+                JsonNode allergies = jsonNode.get("allergies");
+                List<String> allergiesList = new ArrayList<>();
+                for (JsonNode allergienode : allergies) {
+                    allergiesList.add(allergienode.asText());
+                }
+                medicalrecord.setAllergies(allergiesList);
+                medicalrecords.add(medicalrecord);
             }
-            return medicalrecords;    
-            }
-    
+        } else {
+            logger.error("No medical records found");
+        }
+        return medicalrecords;
+    }
+
 }
