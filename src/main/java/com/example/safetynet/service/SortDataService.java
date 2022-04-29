@@ -40,7 +40,7 @@ public class SortDataService {
         && medicalrecord.getLastName().equals(person.getLastName());
     List<Medicalrecord> mrs = medicalrecordService.findAllMedicalRecords().stream().filter(byName)
         .collect(Collectors.toList());
-    Medicalrecord medicalrecord = new Medicalrecord();
+    Medicalrecord medicalrecord;
     if (mrs.size() == 1) {
       medicalrecord = mrs.get(0);
       return LocalDate.now().compareTo(medicalrecord.getBirthdate());
