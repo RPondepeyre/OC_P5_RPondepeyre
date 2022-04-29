@@ -76,10 +76,9 @@ public class FirestationServiceTest {
         rawlist.add(station2);
 
         when(repository.getAll()).thenReturn(rawlist);
-        List<Firestation> result = service.findByAdress("true");
+        Firestation result = service.findByAdress("true");
 
-        assertThat(result).hasSize(1);
-        assertThat(result.get(0).getStation()).isEqualTo(1);
+        assertThat(result.getStation()).isEqualTo(1);
     }
 
 }
