@@ -15,11 +15,12 @@ public class PersonService {
     @Autowired
     PersonsRepository repository;
 
-    public List<Person> findAllPersons(){
+    public List<Person> findAllPersons() {
         return repository.getAll();
     }
 
-    public List<Person> findByAdress(String adress){
-        return repository.getAll().stream().filter(person -> person.getAdress().equals(adress)).collect(Collectors.toList());
+    public List<Person> findByAdress(String adress) {
+        return repository.getAll().stream().filter(person -> person.getAdress().equals(adress))
+                .collect(Collectors.toList());
     }
 }
