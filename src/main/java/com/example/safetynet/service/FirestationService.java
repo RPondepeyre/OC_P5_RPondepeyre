@@ -6,11 +6,15 @@ import java.util.stream.Collectors;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.repository.FirestationsRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FirestationService {
+
+    private static final Logger logger = LoggerFactory.getLogger(FirestationService.class);
 
     @Autowired
     FirestationsRepository repository;
@@ -24,9 +28,20 @@ public class FirestationService {
                 .collect(Collectors.toList());
     }
 
-    public List<Firestation> findByAdress(String adress) {
-        return repository.getAll().stream().filter(firestation -> firestation.getAdress().equals(adress))
+    public Firestation findByAdress(String adress) {
+        List<Firestation> stations = repository.getAll().stream()
+                .filter(firestation -> firestation.getAdress().equals(adress))
                 .collect(Collectors.toList());
+        if (stations.size() == 1) {
+            return stations.get(0);
+        } else if (stations.isEmpty()) {
+            logger.error("Aucune station trouvée pour cette addresse");
+            return null;
+        } else {
+            logger.error("Plusieurs stations trouvées pour cette addresse");
+            return null;
+        }
+
     }
 
 }

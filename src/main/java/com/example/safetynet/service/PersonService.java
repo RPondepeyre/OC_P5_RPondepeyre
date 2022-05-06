@@ -23,4 +23,15 @@ public class PersonService {
         return repository.getAll().stream().filter(person -> person.getAdress().equals(adress))
                 .collect(Collectors.toList());
     }
+
+    public List<Person> findByName(String firstName, String lastName) {
+        return repository.getAll().stream()
+                .filter(person -> person.getFirstName().equals(firstName) && person.getLastName().equals(lastName))
+                .collect(Collectors.toList());
+    }
+
+    public List<Person> findByCity(String city) {
+        return repository.getAll().stream().filter(person -> person.getCity().equals(city))
+                .collect(Collectors.toList());
+    }
 }
