@@ -1,6 +1,7 @@
 package com.example.safetynet.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import com.example.safetynet.DTO.FireAdressDTO;
 import com.example.safetynet.DTO.PersonInfoDTO;
@@ -82,9 +83,10 @@ public class GetController {
     }
 
     // localhost:8080/phoneAlert?firestation=<firestation_number>
+
     @GetMapping("/phoneAlert")
-    public ResponseEntity<List<String>> phoneAlert(@RequestParam int firestation) {
-        List<String> result = phoneAlertService.createPhoneList(firestation);
+    public ResponseEntity<Set<String>> phoneAlert(@RequestParam int firestation) {
+        Set<String> result = phoneAlertService.createPhoneList(firestation);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -131,8 +133,8 @@ public class GetController {
 
     // http://localhost:8080/communityEmail?city=<city>
     @GetMapping("/communityEmail")
-    public ResponseEntity<List<String>> personInfo(@RequestParam String city) {
-        List<String> result = communityEmailService.communityEmail(city);
+    public ResponseEntity<Set<String>> personInfo(@RequestParam String city) {
+        Set<String> result = communityEmailService.communityEmail(city);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {

@@ -1,7 +1,8 @@
 package com.example.safetynet.service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.example.safetynet.model.Person;
 
@@ -14,9 +15,9 @@ public class CommunityEmailService {
     @Autowired
     PersonService personService;
 
-    public List<String> communityEmail(String city) {
+    public Set<String> communityEmail(String city) {
         List<Person> persons = personService.findByCity(city);
-        List<String> result = new ArrayList<>();
+        Set<String> result = new HashSet<>();
         for (Person person : persons) {
             result.add(person.getEmail());
         }

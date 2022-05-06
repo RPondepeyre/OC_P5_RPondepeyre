@@ -1,7 +1,8 @@
 package com.example.safetynet.service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.example.safetynet.model.Person;
 
@@ -14,9 +15,9 @@ public class PhoneAlertService {
     @Autowired
     SortDataService sortDataService;
 
-    public List<String> createPhoneList(int station) {
+    public Set<String> createPhoneList(int station) {
         List<Person> rawlist = sortDataService.findPersonsbystation(station);
-        List<String> result = new ArrayList<>();
+        Set<String> result = new HashSet<>();
         for (Person person : rawlist) {
             result.add(person.getPhone());
         }
