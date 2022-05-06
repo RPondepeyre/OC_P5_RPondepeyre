@@ -6,15 +6,15 @@ import java.util.Set;
 import com.example.safetynet.DTO.FireAdressDTO;
 import com.example.safetynet.DTO.PersonInfoDTO;
 import com.example.safetynet.DTO.PersonsbyFirestationsDTO;
+import com.example.safetynet.DTO.SChildAlertDTO;
 import com.example.safetynet.DTO.StationHousesDTO;
-import com.example.safetynet.DTO.childAlertDTO;
 import com.example.safetynet.service.CommunityEmailService;
 import com.example.safetynet.service.FireAdressService;
 import com.example.safetynet.service.FloodStationsService;
 import com.example.safetynet.service.PersonInfoService;
 import com.example.safetynet.service.PersonsbyFirestationService;
 import com.example.safetynet.service.PhoneAlertService;
-import com.example.safetynet.service.childAlertService;
+import com.example.safetynet.service.SChildAlertService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +43,7 @@ public class GetController {
     PersonsbyFirestationService personsbyFirestationService;
 
     @Autowired
-    childAlertService childAlertService;
+    SChildAlertService childAlertService;
 
     @Autowired
     PhoneAlertService phoneAlertService;
@@ -73,8 +73,8 @@ public class GetController {
 
     // localhost:8080/childAlert?address=<address>
     @GetMapping("/childAlert")
-    public ResponseEntity<List<childAlertDTO>> childAlert(@RequestParam String address) {
-        List<childAlertDTO> result = childAlertService.childAlertDTO(address);
+    public ResponseEntity<List<SChildAlertDTO>> childAlert(@RequestParam String address) {
+        List<SChildAlertDTO> result = childAlertService.childAlertDTO(address);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {

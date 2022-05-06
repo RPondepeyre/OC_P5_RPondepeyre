@@ -57,4 +57,74 @@ public class PersonServiceTest {
         assertThat(result.get(0).getFirstName()).isEqualTo("truefirstname");
 
     }
+
+    @Test
+    void findByNameTestTrue() {
+        List<Person> persons = new ArrayList<>();
+        Person person1 = new Person();
+        person1.setAdress("true");
+        person1.setFirstName("truefirstname");
+        person1.setLastName("truelastName");
+        Person person2 = new Person();
+        person2.setAdress("false");
+        person2.setFirstName("falsefirstname");
+        person2.setLastName("falselastName");
+
+        persons.add(person1);
+        persons.add(person2);
+
+        when(repository.getAll()).thenReturn(persons);
+
+        List<Person> result = service.findByName("truefirstname", "truelastName");
+
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).getAdress()).isEqualTo("true");
+
+    }
+
+    @Test
+    void findByNameTestFalse() {
+        List<Person> persons = new ArrayList<>();
+        Person person1 = new Person();
+        person1.setAdress("true");
+        person1.setFirstName("truefirstname");
+        person1.setLastName("falselastName");
+        Person person2 = new Person();
+        person2.setAdress("false");
+        person2.setFirstName("falsefirstname");
+        person2.setLastName("truelastName");
+
+        persons.add(person1);
+        persons.add(person2);
+
+        when(repository.getAll()).thenReturn(persons);
+
+        List<Person> result = service.findByName("truefirstname", "truelastName");
+
+        assertThat(result).isEmpty();
+
+    }
+
+    @Test
+    void findByCityTest() {
+        List<Person> persons = new ArrayList<>();
+        Person person1 = new Person();
+        person1.setCity("true");
+        person1.setFirstName("truefirstname");
+        Person person2 = new Person();
+        person2.setCity("false");
+        person2.setFirstName("falsefirstname");
+
+        persons.add(person1);
+        persons.add(person2);
+
+        when(repository.getAll()).thenReturn(persons);
+
+        List<Person> result = service.findByCity("true");
+
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).getFirstName()).isEqualTo("truefirstname");
+
+    }
+
 }

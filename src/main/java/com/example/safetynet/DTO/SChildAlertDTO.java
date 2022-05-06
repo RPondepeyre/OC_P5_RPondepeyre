@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.safetynet.model.Person;
 
-public class childAlertDTO {
+public class SChildAlertDTO {
 
     String firstname;
     String lastName;

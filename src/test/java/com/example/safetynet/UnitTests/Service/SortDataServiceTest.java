@@ -1,12 +1,14 @@
 package com.example.safetynet.UnitTests.Service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.safetynet.DTO.PersonMedicalInfoDTO;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.model.Medicalrecord;
 import com.example.safetynet.model.Person;
@@ -60,9 +62,16 @@ public class SortDataServiceTest {
         station.setAdress("adress");
         station.setStation(1);
 
+        List<String> medications = new ArrayList<>();
+        medications.add("medications");
+        List<String> allergies = new ArrayList<>();
+        allergies.add("allergies");
+
         record.setFirstName("firstName");
         record.setLastName("lastName");
         record.setBirthdate(LocalDate.now().minusYears(20));
+        record.setMedications(medications);
+        record.setAllergies(allergies);
 
         adultrecord.setFirstName("adult");
         adultrecord.setLastName("adult");
@@ -180,6 +189,21 @@ public class SortDataServiceTest {
             persons.add(child);
         }
         assertThat(service.childNumber(persons)).isEqualTo(3);
+
+    }
+
+    @Test
+    void personMedicalInfoTest() {
+        records.add(record);
+        doReturn(record).when(medicalrecordService).findByPerson(any(Person.class));
+        doReturn(records).when(medicalrecordService).findAllMedicalRecords();
+        PersonMedicalInfoDTO result = service.createPersonInfo(person);
+
+        assertThat(result.getFirstname()).isEqualTo("firstName");
+        assertThat(result.getLastname()).isEqualTo("lastName");
+        assertThat(result.getAge()).isEqualTo(20);
+        assertThat(result.getMedications().get(0)).isEqualTo("medications");
+        assertThat(result.getAllergies().get(0)).isEqualTo("allergies");
 
     }
 }
