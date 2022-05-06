@@ -9,16 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PhoneAlertService {
+public class CommunityEmailService {
 
     @Autowired
-    SortDataService sortDataService;
+    PersonService personService;
 
-    public List<String> createPhoneList(int station) {
-        List<Person> rawlist = sortDataService.findPersonsbystation(station);
+    public List<String> communityEmail(String city) {
+        List<Person> persons = personService.findByCity(city);
         List<String> result = new ArrayList<>();
-        for (Person person : rawlist) {
-            result.add(person.getPhone());
+        for (Person person : persons) {
+            result.add(person.getEmail());
         }
         return result;
     }

@@ -3,14 +3,17 @@ package com.example.safetynet.controller;
 import java.util.List;
 
 import com.example.safetynet.DTO.FireAdressDTO;
+import com.example.safetynet.DTO.PersonInfoDTO;
 import com.example.safetynet.DTO.PersonsbyFirestationsDTO;
 import com.example.safetynet.DTO.StationHousesDTO;
 import com.example.safetynet.DTO.childAlertDTO;
+import com.example.safetynet.service.CommunityEmailService;
 import com.example.safetynet.service.FireAdressService;
 import com.example.safetynet.service.FloodStationsService;
+import com.example.safetynet.service.PersonInfoService;
 import com.example.safetynet.service.PersonsbyFirestationService;
+import com.example.safetynet.service.PhoneAlertService;
 import com.example.safetynet.service.childAlertService;
-import com.example.safetynet.service.phoneAlertService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,13 +45,19 @@ public class GetController {
     childAlertService childAlertService;
 
     @Autowired
-    phoneAlertService phoneAlertService;
+    PhoneAlertService phoneAlertService;
 
     @Autowired
     FireAdressService fireAdressService;
 
     @Autowired
     FloodStationsService floodStationsService;
+
+    @Autowired
+    PersonInfoService personInfoService;
+
+    @Autowired
+    CommunityEmailService communityEmailService;
 
     // localhost:8080/firestation?stationNumber=<station_number>
     @GetMapping("/firestation")
@@ -75,7 +84,7 @@ public class GetController {
     // localhost:8080/phoneAlert?firestation=<firestation_number>
     @GetMapping("/phoneAlert")
     public ResponseEntity<List<String>> phoneAlert(@RequestParam int firestation) {
-        List<String> result = phoneAlertService.CreatePhoneList(firestation);
+        List<String> result = phoneAlertService.createPhoneList(firestation);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -94,6 +103,7 @@ public class GetController {
         }
     }
 
+    // http://localhost:8080/flood/stations?stations=<a list of station_numbers>
     @GetMapping("/flood/stations")
     public ResponseEntity<List<StationHousesDTO>> floodStations(@RequestParam List<Integer> stations) {
         List<StationHousesDTO> result = floodStationsService.floodStationsHouses(stations);
@@ -102,12 +112,32 @@ public class GetController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        /*
-         * if (result != null) {
-         * return new ResponseEntity<>(result, HttpStatus.OK);
-         * } else {
-         * return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-         * }
-         */
+
+    }
+
+    // http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
+
+    @GetMapping("/personInfo")
+    public ResponseEntity<List<PersonInfoDTO>> personInfo(@RequestParam String firstName,
+            @RequestParam String lastName) {
+        List<PersonInfoDTO> result = personInfoService.personInfo(firstName, lastName);
+        if (result != null) {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+    }
+
+    // http://localhost:8080/communityEmail?city=<city>
+    @GetMapping("/communityEmail")
+    public ResponseEntity<List<String>> personInfo(@RequestParam String city) {
+        List<String> result = communityEmailService.communityEmail(city);
+        if (result != null) {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
     }
 }
