@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import com.example.safetynet.DTO.PersonMedicalInfoDTO;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.model.Medicalrecord;
 import com.example.safetynet.model.Person;
@@ -71,6 +72,19 @@ public class SortDataService {
       }
     }
     return children;
+  }
+
+  public PersonMedicalInfoDTO createPersonInfo(Person person) {
+
+    PersonMedicalInfoDTO personInfo = new PersonMedicalInfoDTO();
+    personInfo.setFirstname(person.getFirstName());
+    personInfo.setLastname(person.getLastName());
+    personInfo.setPhone(person.getPhone());
+    personInfo.setAge(personAge(person));
+    personInfo.setMedications(medicalrecordService.findByPerson(person).getMedications());
+    personInfo.setAllergies(medicalrecordService.findByPerson(person).getAllergies());
+    return personInfo;
+
   }
 
 }
