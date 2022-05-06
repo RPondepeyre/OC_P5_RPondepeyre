@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.safetynet.DTO.SChildAlertDTO;
+import com.example.safetynet.DTO.ChildAlertDTO;
 import com.example.safetynet.model.Person;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SChildAlertService {
+public class ChildAlertService {
 
     @Autowired
     PersonService personService;
@@ -19,13 +19,13 @@ public class SChildAlertService {
     @Autowired
     SortDataService sortDataService;
 
-    public List<SChildAlertDTO> childAlertDTO(String adress) {
+    public List<ChildAlertDTO> childAlertDTO(String adress) {
         List<Person> rawlist = personService.findByAdress(adress);
-        List<SChildAlertDTO> result = new ArrayList<>();
+        List<ChildAlertDTO> result = new ArrayList<>();
         for (Person person : rawlist) {
             int age = sortDataService.personAge(person);
             if (age < 18) {
-                SChildAlertDTO childAlertDTO = new SChildAlertDTO();
+                ChildAlertDTO childAlertDTO = new ChildAlertDTO();
                 childAlertDTO.setFirstname(person.getFirstName());
                 childAlertDTO.setLastName(person.getLastName());
                 childAlertDTO.setAge(age);

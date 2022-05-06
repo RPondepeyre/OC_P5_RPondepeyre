@@ -3,10 +3,10 @@ package com.example.safetynet.controller;
 import java.util.List;
 import java.util.Set;
 
+import com.example.safetynet.DTO.ChildAlertDTO;
 import com.example.safetynet.DTO.FireAdressDTO;
 import com.example.safetynet.DTO.PersonInfoDTO;
 import com.example.safetynet.DTO.PersonsbyFirestationsDTO;
-import com.example.safetynet.DTO.SChildAlertDTO;
 import com.example.safetynet.DTO.StationHousesDTO;
 import com.example.safetynet.service.CommunityEmailService;
 import com.example.safetynet.service.FireAdressService;
@@ -73,8 +73,8 @@ public class GetController {
 
     // localhost:8080/childAlert?address=<address>
     @GetMapping("/childAlert")
-    public ResponseEntity<List<SChildAlertDTO>> childAlert(@RequestParam String address) {
-        List<SChildAlertDTO> result = childAlertService.childAlertDTO(address);
+    public ResponseEntity<List<ChildAlertDTO>> childAlert(@RequestParam String address) {
+        List<ChildAlertDTO> result = childAlertService.childAlertDTO(address);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {

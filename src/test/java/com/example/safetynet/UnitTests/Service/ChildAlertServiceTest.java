@@ -10,10 +10,10 @@ import static org.mockito.Mockito.verify;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.safetynet.DTO.SChildAlertDTO;
+import com.example.safetynet.DTO.ChildAlertDTO;
 import com.example.safetynet.model.Person;
+import com.example.safetynet.service.ChildAlertService;
 import com.example.safetynet.service.PersonService;
-import com.example.safetynet.service.SChildAlertService;
 import com.example.safetynet.service.SortDataService;
 
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class SChildAlertServiceTest {
+public class ChildAlertServiceTest {
 
     @Mock
     PersonService personService;
@@ -32,7 +32,7 @@ public class SChildAlertServiceTest {
     SortDataService sortDataService;
 
     @InjectMocks
-    SChildAlertService service;
+    ChildAlertService service;
 
     @Test
     void childAlertDTOTest() {
@@ -48,7 +48,7 @@ public class SChildAlertServiceTest {
         doReturn(persons).when(personService).findByAdress(anyString());
         doReturn(15).when(sortDataService).personAge(any(Person.class));
 
-        List<SChildAlertDTO> result = service.childAlertDTO("adress");
+        List<ChildAlertDTO> result = service.childAlertDTO("adress");
 
         verify(sortDataService, times(2)).personAge(any(Person.class));
         assertThat(result.get(0).getFirstname()).isEqualTo("firstName");
