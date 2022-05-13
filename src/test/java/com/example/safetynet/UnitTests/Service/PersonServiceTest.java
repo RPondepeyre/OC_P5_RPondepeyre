@@ -37,13 +37,13 @@ public class PersonServiceTest {
     }
 
     @Test
-    void findByAdressTest() {
+    void findByAddressTest() {
         List<Person> persons = new ArrayList<>();
         Person person1 = new Person();
-        person1.setAdress("true");
+        person1.setAddress("true");
         person1.setFirstName("truefirstname");
         Person person2 = new Person();
-        person2.setAdress("false");
+        person2.setAddress("false");
         person2.setFirstName("falsefirstname");
 
         persons.add(person1);
@@ -51,7 +51,7 @@ public class PersonServiceTest {
 
         when(repository.getAll()).thenReturn(persons);
 
-        List<Person> result = service.findByAdress("true");
+        List<Person> result = service.findByAddress("true");
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getFirstName()).isEqualTo("truefirstname");
@@ -62,11 +62,11 @@ public class PersonServiceTest {
     void findByNameTestTrue() {
         List<Person> persons = new ArrayList<>();
         Person person1 = new Person();
-        person1.setAdress("true");
+        person1.setAddress("true");
         person1.setFirstName("truefirstname");
         person1.setLastName("truelastName");
         Person person2 = new Person();
-        person2.setAdress("false");
+        person2.setAddress("false");
         person2.setFirstName("falsefirstname");
         person2.setLastName("falselastName");
 
@@ -78,7 +78,7 @@ public class PersonServiceTest {
         List<Person> result = service.findByName("truefirstname", "truelastName");
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getAdress()).isEqualTo("true");
+        assertThat(result.get(0).getAddress()).isEqualTo("true");
 
     }
 
@@ -86,11 +86,11 @@ public class PersonServiceTest {
     void findByNameTestFalse() {
         List<Person> persons = new ArrayList<>();
         Person person1 = new Person();
-        person1.setAdress("true");
+        person1.setAddress("true");
         person1.setFirstName("truefirstname");
         person1.setLastName("falselastName");
         Person person2 = new Person();
-        person2.setAdress("false");
+        person2.setAddress("false");
         person2.setFirstName("falsefirstname");
         person2.setLastName("truelastName");
 

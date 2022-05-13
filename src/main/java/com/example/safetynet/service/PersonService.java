@@ -19,8 +19,8 @@ public class PersonService {
         return repository.getAll();
     }
 
-    public List<Person> findByAdress(String adress) {
-        return repository.getAll().stream().filter(person -> person.getAdress().equals(adress))
+    public List<Person> findByAddress(String address) {
+        return repository.getAll().stream().filter(person -> person.getAddress().equals(address))
                 .collect(Collectors.toList());
     }
 
@@ -34,4 +34,12 @@ public class PersonService {
         return repository.getAll().stream().filter(person -> person.getCity().equals(city))
                 .collect(Collectors.toList());
     }
+
+    public Person addPerson(Person person) {
+        repository.add(person);
+        return person;
+
+    }
+
+    // public Person updatePerson(Person newperson) {}
 }

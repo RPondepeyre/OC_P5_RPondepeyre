@@ -45,7 +45,7 @@ public class PersonsbyFirestationServiceTest {
         Person person = new Person();
         person.setFirstName("firstName");
         person.setLastName("lastName");
-        person.setAdress("adress");
+        person.setAddress("address");
         person.setPhone("phone");
         rawlist.add(person);
         Person person2 = new Person();
@@ -59,7 +59,7 @@ public class PersonsbyFirestationServiceTest {
         assertThat(result.getPersons()).hasSize(2);
         assertThat(result.getPersons().get(0).getFirstName()).isEqualTo("firstName");
         assertThat(result.getPersons().get(0).getLastName()).isEqualTo("lastName");
-        assertThat(result.getPersons().get(0).getAdress()).isEqualTo("adress");
+        assertThat(result.getPersons().get(0).getAddress()).isEqualTo("address");
         assertThat(result.getPersons().get(0).getPhone()).isEqualTo("phone");
         assertThat(result.getPersons().get(1).getFirstName()).isEqualTo("firstName2");
         assertThat(result.getNbAdults()).isZero();

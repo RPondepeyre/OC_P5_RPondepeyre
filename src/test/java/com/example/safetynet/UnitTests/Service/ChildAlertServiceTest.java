@@ -54,10 +54,10 @@ public class ChildAlertServiceTest {
         persons.add(person2);
         persons.add(person3);
 
-        doReturn(persons).when(personService).findByAdress(anyString());
+        doReturn(persons).when(personService).findByAddress(anyString());
         doReturn(15, 12, 20).when(sortDataService).personAge(any(Person.class));
 
-        List<ChildAlertDTO> result = service.childAlertDTO("adress");
+        List<ChildAlertDTO> result = service.childAlertDTO("address");
 
         verify(sortDataService, times(3)).personAge(any(Person.class));
         assertThat(result).hasSize(2);

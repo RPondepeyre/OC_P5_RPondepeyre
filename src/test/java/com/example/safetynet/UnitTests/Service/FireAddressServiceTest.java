@@ -10,11 +10,11 @@ import static org.mockito.Mockito.verify;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.safetynet.DTO.FireAdressDTO;
+import com.example.safetynet.DTO.FireAddressDTO;
 import com.example.safetynet.DTO.PersonMedicalInfoDTO;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.model.Person;
-import com.example.safetynet.service.FireAdressService;
+import com.example.safetynet.service.FireAddressService;
 import com.example.safetynet.service.FirestationService;
 import com.example.safetynet.service.PersonService;
 import com.example.safetynet.service.SortDataService;
@@ -26,7 +26,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class FireAdressServiceTest {
+public class FireAddressServiceTest {
 
     @Mock
     FirestationService firestationService;
@@ -38,27 +38,27 @@ public class FireAdressServiceTest {
     SortDataService sortDataService;
 
     @InjectMocks
-    FireAdressService service;
+    FireAddressService service;
 
     @Test
-    void createFireAdressDTOTest() {
+    void createFireAddressDTOTest() {
 
         Firestation firestation = new Firestation();
         firestation.setStation(1);
-        doReturn(firestation).when(firestationService).findByAdress(anyString());
+        doReturn(firestation).when(firestationService).findByAddress(anyString());
 
         List<Person> persons = new ArrayList<>();
         Person person = new Person();
         persons.add(person);
         persons.add(person);
 
-        doReturn(persons).when(personService).findByAdress(anyString());
+        doReturn(persons).when(personService).findByAddress(anyString());
         PersonMedicalInfoDTO personmed = new PersonMedicalInfoDTO();
         personmed.setFirstname("firstname");
         personmed.setLastname("lastname");
         doReturn(personmed).when(sortDataService).createPersonInfo(any(Person.class));
 
-        FireAdressDTO result = service.createFireAdressDTO("address");
+        FireAddressDTO result = service.createFireAddressDTO("address");
 
         verify(sortDataService, times(2)).createPersonInfo(any(Person.class));
 

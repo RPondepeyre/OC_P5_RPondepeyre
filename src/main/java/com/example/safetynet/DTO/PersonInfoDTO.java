@@ -6,7 +6,7 @@ public class PersonInfoDTO {
 
     String firstname;
     String lastname;
-    String adress;
+    String address;
     int age;
     String email;
 
@@ -29,12 +29,12 @@ public class PersonInfoDTO {
         this.lastname = lastname;
     }
 
-    public String getAdress() {
-        return this.adress;
+    public String getAddress() {
+        return this.address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getAge() {

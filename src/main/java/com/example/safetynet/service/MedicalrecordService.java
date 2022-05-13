@@ -40,4 +40,8 @@ public class MedicalrecordService {
         }
     }
 
+    public Medicalrecord addMedicalRecord(Medicalrecord medicalrecord) {
+        repository.add(medicalrecord);
+        return medicalrecord;
+    }
 }

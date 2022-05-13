@@ -2,15 +2,15 @@ package com.example.safetynet.model;
 
 public class Firestation {
 
-    private String adress;
+    private String address;
     private Integer station;
 
-    public String getAdress() {
-        return this.adress;
+    public String getAddress() {
+        return this.address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Integer getStation() {

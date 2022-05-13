@@ -46,11 +46,11 @@ public class FirestationServiceTest {
         List<Firestation> rawlist = new ArrayList<>();
 
         Firestation station = new Firestation();
-        station.setAdress("true");
+        station.setAddress("true");
         station.setStation(1);
 
         Firestation station2 = new Firestation();
-        station2.setAdress("false");
+        station2.setAddress("false");
         station2.setStation(2);
 
         rawlist.add(station);
@@ -60,60 +60,60 @@ public class FirestationServiceTest {
         List<Firestation> result = service.findByStation(1);
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getAdress()).isEqualTo("true");
+        assertThat(result.get(0).getAddress()).isEqualTo("true");
     }
 
     @Test
-    void findByAdressTestTrue() {
+    void findByAddressTestTrue() {
 
         List<Firestation> rawlist = new ArrayList<>();
 
         Firestation station = new Firestation();
-        station.setAdress("true");
+        station.setAddress("true");
         station.setStation(1);
 
         Firestation station2 = new Firestation();
-        station2.setAdress("false");
+        station2.setAddress("false");
         station2.setStation(2);
 
         rawlist.add(station);
         rawlist.add(station2);
 
         when(repository.getAll()).thenReturn(rawlist);
-        Firestation result = service.findByAdress("true");
+        Firestation result = service.findByAddress("true");
 
         assertThat(result.getStation()).isEqualTo(1);
     }
 
     @Test
-    void findByAdressTestEmpty() {
+    void findByAddressTestEmpty() {
 
         List<Firestation> rawlist = new ArrayList<>();
 
         when(repository.getAll()).thenReturn(rawlist);
-        Firestation result = service.findByAdress("true");
+        Firestation result = service.findByAddress("true");
         assertThat(result).isNull();
         assertThat(logCaptor.getErrorLogs()).containsExactly("Aucune station trouvée pour cette addresse");
     }
 
     @Test
-    void findByAdressTesttoManyStations() {
+    void findByAddressTesttoManyStations() {
 
         List<Firestation> rawlist = new ArrayList<>();
 
         Firestation station = new Firestation();
-        station.setAdress("true");
+        station.setAddress("true");
         station.setStation(1);
 
         Firestation station2 = new Firestation();
-        station2.setAdress("true");
+        station2.setAddress("true");
         station2.setStation(2);
 
         rawlist.add(station);
         rawlist.add(station2);
 
         when(repository.getAll()).thenReturn(rawlist);
-        service.findByAdress("true");
+        service.findByAddress("true");
         assertThat(logCaptor.getErrorLogs()).containsExactly("Plusieurs stations trouvées pour cette addresse");
 
     }

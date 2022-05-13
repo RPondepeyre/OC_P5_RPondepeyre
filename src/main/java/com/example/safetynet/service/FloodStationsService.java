@@ -32,9 +32,9 @@ public class FloodStationsService {
             List<Firestation> stations = firestationService.findByStation(station);
             for (Firestation firestation : stations) {
                 HouseDTO house = new HouseDTO();
-                house.setAddress(firestation.getAdress());
+                house.setAddress(firestation.getAddress());
                 List<PersonMedicalInfoDTO> persons = new ArrayList<>();
-                List<Person> rawlist = personService.findByAdress(firestation.getAdress());
+                List<Person> rawlist = personService.findByAddress(firestation.getAddress());
                 for (Person person : rawlist) {
                     PersonMedicalInfoDTO personInfo = sortDataService.createPersonInfo(person);
                     persons.add(personInfo);

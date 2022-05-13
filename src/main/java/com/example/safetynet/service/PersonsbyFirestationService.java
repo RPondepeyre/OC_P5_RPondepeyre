@@ -41,7 +41,7 @@ public class PersonsbyFirestationService {
       PersonsDTO dto = new PersonsDTO();
       dto.setFirstName(person.getFirstName());
       dto.setLastName(person.getLastName());
-      dto.setAdress(person.getAdress());
+      dto.setAddress(person.getAddress());
       dto.setPhone(person.getPhone());
       personsDTOs.add(dto);
     }
@@ -51,7 +51,7 @@ public class PersonsbyFirestationService {
 
   // Get1: Liste de personnes couvertes par la caserne de pompiers correspondante
   // au paramêtre (ID)
-  // Prénom, Nom, Adresse, téléphone, + décompte du nombre d'adultes et d'enfants
+  // Prénom, Nom, Addresse, téléphone, + décompte du nombre d'adultes et d'enfants
   // dans la zone
 
 }

@@ -4,7 +4,7 @@ public class PersonsDTO {
 
     private String firstName;
     private String lastName;
-    private String adress;
+    private String address;
     private String phone;
 
     public String getFirstName() {
@@ -23,12 +23,12 @@ public class PersonsDTO {
         this.lastName = lastName;
     }
 
-    public String getAdress() {
-        return this.adress;
+    public String getAddress() {
+        return this.address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getPhone() {

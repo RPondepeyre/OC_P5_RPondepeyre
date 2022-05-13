@@ -60,7 +60,7 @@ public class GetDataServiceTest {
         when(objectmapper.readTree(any(File.class))).thenReturn(datanode);
         List<Firestation> result = service.getFirestations("pathname");
         assertThat(result).isNotNull();
-        assertThat(result.get(0).getAdress()).isEqualTo("1509 Culver St");
+        assertThat(result.get(0).getAddress()).isEqualTo("1509 Culver St");
         assertThat(result.get(0).getStation()).isEqualTo(3);
 
     }
@@ -82,7 +82,7 @@ public class GetDataServiceTest {
         assertThat(result).isNotNull();
         assertThat(result.get(0).getFirstName()).isEqualTo("John");
         assertThat(result.get(0).getLastName()).isEqualTo("Boyd");
-        assertThat(result.get(0).getAdress()).isEqualTo("1509 Culver St");
+        assertThat(result.get(0).getAddress()).isEqualTo("1509 Culver St");
         assertThat(result.get(0).getCity()).isEqualTo("Culver");
         assertThat(result.get(0).getZip()).isEqualTo("97451");
         assertThat(result.get(0).getPhone()).isEqualTo("841-874-6512");

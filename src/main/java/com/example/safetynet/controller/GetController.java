@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Set;
 
 import com.example.safetynet.DTO.ChildAlertDTO;
-import com.example.safetynet.DTO.FireAdressDTO;
+import com.example.safetynet.DTO.FireAddressDTO;
 import com.example.safetynet.DTO.PersonInfoDTO;
 import com.example.safetynet.DTO.PersonsbyFirestationsDTO;
 import com.example.safetynet.DTO.StationHousesDTO;
 import com.example.safetynet.service.ChildAlertService;
 import com.example.safetynet.service.CommunityEmailService;
-import com.example.safetynet.service.FireAdressService;
+import com.example.safetynet.service.FireAddressService;
 import com.example.safetynet.service.FloodStationsService;
 import com.example.safetynet.service.PersonInfoService;
 import com.example.safetynet.service.PersonsbyFirestationService;
@@ -22,19 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-/*
-@ControllerAdvice
-public class ExceptionsHandle
-
-@ExceptionHandler(FirestationAlreadyExistsException.class)
-    public ResponseEntity<Object> handleFirestationAlreadyExistsExceptions(FirestationAlreadyExistsException e){
-        logger.error("Firestation Already exists");
-        CustomErrorResponse res = new CustomErrorResponse(e.getMessage(),e, HttpStatus.CONFLICT, ZonedDateTime.now());
-        return new ResponseEntity<>(res,HttpStatus.CONFLICT);
-    }
-
-*/
 
 @RestController
 public class GetController {
@@ -49,7 +36,7 @@ public class GetController {
     PhoneAlertService phoneAlertService;
 
     @Autowired
-    FireAdressService fireAdressService;
+    FireAddressService fireAddressService;
 
     @Autowired
     FloodStationsService floodStationsService;
@@ -96,8 +83,8 @@ public class GetController {
 
     // localhost:8080/fire?address=<address>
     @GetMapping("/fire")
-    public ResponseEntity<FireAdressDTO> fire(@RequestParam String address) {
-        FireAdressDTO result = fireAdressService.createFireAdressDTO(address);
+    public ResponseEntity<FireAddressDTO> fire(@RequestParam String address) {
+        FireAddressDTO result = fireAddressService.createFireAddressDTO(address);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {

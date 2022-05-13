@@ -19,8 +19,8 @@ public class ChildAlertService {
     @Autowired
     SortDataService sortDataService;
 
-    public List<ChildAlertDTO> childAlertDTO(String adress) {
-        List<Person> rawlist = personService.findByAdress(adress);
+    public List<ChildAlertDTO> childAlertDTO(String address) {
+        List<Person> rawlist = personService.findByAddress(address);
         List<ChildAlertDTO> result = new ArrayList<>();
         for (Person person : rawlist) {
             int age = sortDataService.personAge(person);

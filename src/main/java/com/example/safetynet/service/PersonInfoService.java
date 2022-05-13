@@ -26,7 +26,7 @@ public class PersonInfoService {
             PersonInfoDTO personInfoDTO = new PersonInfoDTO();
             personInfoDTO.setFirstname(person.getFirstName());
             personInfoDTO.setLastname(person.getLastName());
-            personInfoDTO.setAdress(person.getAdress());
+            personInfoDTO.setAddress(person.getAddress());
             personInfoDTO.setAge(sortDataService.personAge(person));
             personInfoDTO.setEmail(person.getEmail());
             personInfoDTO.setMedications(medicalrecordService.findByPerson(person).getMedications());

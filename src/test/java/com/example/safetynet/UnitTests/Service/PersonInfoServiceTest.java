@@ -44,7 +44,7 @@ public class PersonInfoServiceTest {
         Person person = new Person();
         person.setFirstName("firstName");
         person.setLastName("lastName");
-        person.setAdress("adress");
+        person.setAddress("address");
         person.setEmail("email");
         persons.add(person);
         persons.add(person);
@@ -66,7 +66,7 @@ public class PersonInfoServiceTest {
         assertThat(result.get(0).getAllergies().get(0)).isEqualTo("allergies");
         assertThat(result.get(0).getFirstname()).isEqualTo("firstName");
         assertThat(result.get(0).getLastname()).isEqualTo("lastName");
-        assertThat(result.get(0).getAdress()).isEqualTo("adress");
+        assertThat(result.get(0).getAddress()).isEqualTo("address");
         assertThat(result.get(0).getEmail()).isEqualTo("email");
         assertThat(result.get(0).getAge()).isEqualTo(20);
 

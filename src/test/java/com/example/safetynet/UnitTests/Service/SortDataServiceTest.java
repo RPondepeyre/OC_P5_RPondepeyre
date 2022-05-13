@@ -57,10 +57,10 @@ public class SortDataServiceTest {
 
         person.setFirstName("firstName");
         person.setLastName("lastName");
-        person.setAdress("adress");
+        person.setAddress("address");
         person.setPhone("phone");
 
-        station.setAdress("adress");
+        station.setAddress("address");
         station.setStation(1);
 
         List<String> medications = new ArrayList<>();
@@ -95,7 +95,7 @@ public class SortDataServiceTest {
         persons.add(person);
         stations.add(station);
         doReturn(stations).when(firestationService).findByStation(1);
-        doReturn(persons).when(personService).findByAdress("adress");
+        doReturn(persons).when(personService).findByAddress("address");
         List<Person> result = service.findPersonsbystation(1);
 
         assertThat(result).isNotEmpty();

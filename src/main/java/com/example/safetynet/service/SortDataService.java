@@ -31,8 +31,8 @@ public class SortDataService {
 
   public List<Person> findPersonsbystation(int stationIn) {
     return firestationService.findByStation(stationIn).stream()
-        .map(Firestation::getAdress)
-        .flatMap(adress -> personService.findByAdress(adress).stream())
+        .map(Firestation::getAddress)
+        .flatMap(address -> personService.findByAddress(address).stream())
         .collect(Collectors.toList());
   }
 

@@ -43,7 +43,7 @@ public class FloodStationServiceTest {
 
         List<Firestation> stations = new ArrayList<>();
         Firestation station = new Firestation();
-        station.setAdress("adress");
+        station.setAddress("address");
         station.setStation(1);
         stations.add(station);
         doReturn(stations).when(firestationService).findByStation(any());
@@ -54,7 +54,7 @@ public class FloodStationServiceTest {
         person.setLastName("lastName");
         persons.add(person);
         persons.add(person);
-        doReturn(persons).when(personService).findByAdress(anyString());
+        doReturn(persons).when(personService).findByAddress(anyString());
 
         PersonMedicalInfoDTO personInfo = new PersonMedicalInfoDTO();
         personInfo.setFirstname("firstname");
@@ -68,7 +68,7 @@ public class FloodStationServiceTest {
         assertThat(result).hasSize(2);
         assertThat(result.get(0).getStationID()).isEqualTo(1);
         assertThat(result.get(0).getHouses()).hasSize(1);
-        assertThat(result.get(0).getHouses().get(0).getAddress()).isEqualTo("adress");
+        assertThat(result.get(0).getHouses().get(0).getAddress()).isEqualTo("address");
         assertThat(result.get(0).getHouses().get(0).getPersons()).hasSize(2);
     }
 

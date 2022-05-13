@@ -2,7 +2,7 @@ package com.example.safetynet.DTO;
 
 import java.util.List;
 
-public class FireAdressDTO {
+public class FireAddressDTO {
 
     List<PersonMedicalInfoDTO> persons;
     int station;

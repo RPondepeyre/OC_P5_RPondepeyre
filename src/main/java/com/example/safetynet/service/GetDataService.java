@@ -40,7 +40,7 @@ public class GetDataService {
         if (array.isArray()) {
             for (JsonNode jsonNode : array) {
                 Firestation firestation = new Firestation();
-                firestation.setAdress(jsonNode.get("address").asText());
+                firestation.setAddress(jsonNode.get("address").asText());
                 firestation.setStation(jsonNode.get("station").asInt());
                 firestations.add(firestation);
             }
@@ -61,7 +61,7 @@ public class GetDataService {
                 Person person = new Person();
                 person.setFirstName(jsonNode.get("firstName").asText());
                 person.setLastName(jsonNode.get("lastName").asText());
-                person.setAdress(jsonNode.get("address").asText());
+                person.setAddress(jsonNode.get("address").asText());
                 person.setCity(jsonNode.get("city").asText());
                 person.setZip(jsonNode.get("zip").asText());
                 person.setPhone(jsonNode.get("phone").asText());

@@ -28,9 +28,9 @@ public class FirestationService {
                 .collect(Collectors.toList());
     }
 
-    public Firestation findByAdress(String adress) {
+    public Firestation findByAddress(String address) {
         List<Firestation> stations = repository.getAll().stream()
-                .filter(firestation -> firestation.getAdress().equals(adress))
+                .filter(firestation -> firestation.getAddress().equals(address))
                 .collect(Collectors.toList());
         if (stations.size() == 1) {
             return stations.get(0);
@@ -42,6 +42,11 @@ public class FirestationService {
             return null;
         }
 
+    }
+
+    public Firestation addFirestation(Firestation firestation) {
+        repository.add(firestation);
+        return firestation;
     }
 
 }
