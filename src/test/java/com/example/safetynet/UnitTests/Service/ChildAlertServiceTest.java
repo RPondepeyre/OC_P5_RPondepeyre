@@ -40,18 +40,32 @@ public class ChildAlertServiceTest {
         person.setFirstName("firstName");
         person.setLastName("lastName");
 
+        Person person2 = new Person();
+        person2.setFirstName("firstName2");
+        person2.setLastName("lastName");
+
+        Person person3 = new Person();
+        person3.setFirstName("firstName3");
+        person3.setLastName("lastName");
+
         List<Person> persons = new ArrayList<>();
 
         persons.add(person);
-        persons.add(person);
+        persons.add(person2);
+        persons.add(person3);
 
         doReturn(persons).when(personService).findByAdress(anyString());
-        doReturn(15).when(sortDataService).personAge(any(Person.class));
+        doReturn(15, 12, 20).when(sortDataService).personAge(any(Person.class));
 
         List<ChildAlertDTO> result = service.childAlertDTO("adress");
 
-        verify(sortDataService, times(2)).personAge(any(Person.class));
+        verify(sortDataService, times(3)).personAge(any(Person.class));
+        assertThat(result).hasSize(2);
+        assertThat(result.get(0).getPersons()).hasSize(2);
+        assertThat(result.get(0).getLastName()).isEqualTo("lastName");
         assertThat(result.get(0).getFirstname()).isEqualTo("firstName");
+        assertThat(result.get(0).getAge()).isEqualTo(15);
+        assertThat(result.get(1).getAge()).isEqualTo(12);
 
     }
 }

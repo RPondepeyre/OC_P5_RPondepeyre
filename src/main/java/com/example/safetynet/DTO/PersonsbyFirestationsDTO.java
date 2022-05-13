@@ -8,12 +8,6 @@ public class PersonsbyFirestationsDTO {
     int nbAdults;
     int nbChildren;
 
-    public PersonsbyFirestationsDTO(List<PersonsDTO> persons, int nbAdults, int nbChildren) {
-        this.persons = persons;
-        this.nbAdults = nbAdults;
-        this.nbChildren = nbChildren;
-    }
-
     public List<PersonsDTO> getPersons() {
         return this.persons;
     }

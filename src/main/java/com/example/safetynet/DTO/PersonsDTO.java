@@ -7,13 +7,6 @@ public class PersonsDTO {
     private String adress;
     private String phone;
 
-    public PersonsDTO(String firstName, String lastName, String adress, String phone) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.adress = adress;
-        this.phone = phone;
-    }
-
     public String getFirstName() {
         return this.firstName;
     }

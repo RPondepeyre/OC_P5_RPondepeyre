@@ -23,10 +23,11 @@ public class PersonsbyFirestationService {
   public PersonsbyFirestationsDTO personsbyFirestationDTO(int stationNumber) {
     List<Person> rawlist = service.findPersonsbystation(stationNumber);
     if (!rawlist.isEmpty()) {
-      return new PersonsbyFirestationsDTO(
-          createPersonsDTO(rawlist),
-          service.adultNumber(rawlist),
-          service.childNumber(rawlist));
+      PersonsbyFirestationsDTO result = new PersonsbyFirestationsDTO();
+      result.setPersons(createPersonsDTO(rawlist));
+      result.setNbAdults(service.adultNumber(rawlist));
+      result.setNbChildren(service.childNumber(rawlist));
+      return result;
     } else {
       logger.error("La station mentionnée n'existe pas");
       return null;
@@ -37,11 +38,11 @@ public class PersonsbyFirestationService {
   public List<PersonsDTO> createPersonsDTO(List<Person> persons) {
     List<PersonsDTO> personsDTOs = new ArrayList<>();
     for (Person person : persons) {
-      PersonsDTO dto = new PersonsDTO(
-          person.getFirstName(),
-          person.getLastName(),
-          person.getAdress(),
-          person.getPhone());
+      PersonsDTO dto = new PersonsDTO();
+      dto.setFirstName(person.getFirstName());
+      dto.setLastName(person.getLastName());
+      dto.setAdress(person.getAdress());
+      dto.setPhone(person.getPhone());
       personsDTOs.add(dto);
     }
 

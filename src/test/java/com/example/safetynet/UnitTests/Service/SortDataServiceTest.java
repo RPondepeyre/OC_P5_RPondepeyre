@@ -58,6 +58,7 @@ public class SortDataServiceTest {
         person.setFirstName("firstName");
         person.setLastName("lastName");
         person.setAdress("adress");
+        person.setPhone("phone");
 
         station.setAdress("adress");
         station.setStation(1);
@@ -204,6 +205,7 @@ public class SortDataServiceTest {
         assertThat(result.getAge()).isEqualTo(20);
         assertThat(result.getMedications().get(0)).isEqualTo("medications");
         assertThat(result.getAllergies().get(0)).isEqualTo("allergies");
+        assertThat(result.getPhone()).isEqualTo("phone");
 
     }
 }

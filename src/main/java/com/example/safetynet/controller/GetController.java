@@ -8,13 +8,13 @@ import com.example.safetynet.DTO.FireAdressDTO;
 import com.example.safetynet.DTO.PersonInfoDTO;
 import com.example.safetynet.DTO.PersonsbyFirestationsDTO;
 import com.example.safetynet.DTO.StationHousesDTO;
+import com.example.safetynet.service.ChildAlertService;
 import com.example.safetynet.service.CommunityEmailService;
 import com.example.safetynet.service.FireAdressService;
 import com.example.safetynet.service.FloodStationsService;
 import com.example.safetynet.service.PersonInfoService;
 import com.example.safetynet.service.PersonsbyFirestationService;
 import com.example.safetynet.service.PhoneAlertService;
-import com.example.safetynet.service.SChildAlertService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +43,7 @@ public class GetController {
     PersonsbyFirestationService personsbyFirestationService;
 
     @Autowired
-    SChildAlertService childAlertService;
+    ChildAlertService childAlertService;
 
     @Autowired
     PhoneAlertService phoneAlertService;
