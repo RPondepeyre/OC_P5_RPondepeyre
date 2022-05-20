@@ -75,10 +75,9 @@ public class PersonServiceTest {
 
         when(repository.getAll()).thenReturn(persons);
 
-        List<Person> result = service.findByName("truefirstname", "truelastName");
+        Person result = service.findByName("truefirstname", "truelastName");
 
-        assertThat(result).hasSize(1);
-        assertThat(result.get(0).getAddress()).isEqualTo("true");
+        assertThat(result.getAddress()).isEqualTo("true");
 
     }
 
@@ -99,9 +98,9 @@ public class PersonServiceTest {
 
         when(repository.getAll()).thenReturn(persons);
 
-        List<Person> result = service.findByName("truefirstname", "truelastName");
+        Person result = service.findByName("truefirstname", "truelastName");
 
-        assertThat(result).isEmpty();
+        assertThat(result).isNull();
 
     }
 

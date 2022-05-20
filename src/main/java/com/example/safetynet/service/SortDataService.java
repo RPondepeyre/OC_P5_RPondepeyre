@@ -2,23 +2,20 @@ package com.example.safetynet.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.example.safetynet.DTO.PersonMedicalInfoDTO;
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.model.Medicalrecord;
 import com.example.safetynet.model.Person;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SortDataService {
-
-  private static final Logger logger = LoggerFactory.getLogger(SortDataService.class);
 
   @Autowired
   FirestationService firestationService;
@@ -29,32 +26,20 @@ public class SortDataService {
   @Autowired
   MedicalrecordService medicalrecordService;
 
-  public List<Person> findPersonsbystation(int stationIn) {
+  public List<Person> findPersonsbystation(int stationIn) throws RessourceNotFoundException {
     return firestationService.findByStation(stationIn).stream()
         .map(Firestation::getAddress)
         .flatMap(address -> personService.findByAddress(address).stream())
         .collect(Collectors.toList());
   }
 
-  public int personAge(Person person) {
-    Predicate<Medicalrecord> byName = medicalrecord -> medicalrecord.getFirstName().equals(person.getFirstName())
-        && medicalrecord.getLastName().equals(person.getLastName());
-    List<Medicalrecord> mrs = medicalrecordService.findAllMedicalRecords().stream().filter(byName)
-        .collect(Collectors.toList());
-    Medicalrecord medicalrecord;
-    if (mrs.size() == 1) {
-      medicalrecord = mrs.get(0);
-      return LocalDate.now().compareTo(medicalrecord.getBirthdate());
-    } else if (mrs.isEmpty()) {
-      logger.error("No Medical Record found for this person");
-      return 0;
-    } else {
-      logger.error("Multiple persons with this firstname and lastname combination founded");
-      return 0;
-    }
+  public int personAge(Person person) throws RessourceNotFoundException, TooManyRessourcesFoundException {
+    Medicalrecord medicalrecord = medicalrecordService.findByPerson(person);
+    return LocalDate.now().compareTo(medicalrecord.getBirthdate());
+
   }
 
-  public int adultNumber(List<Person> persons) {
+  public int adultNumber(List<Person> persons) throws RessourceNotFoundException, TooManyRessourcesFoundException {
     int adults = 0;
     for (Person person : persons) {
       if (personAge(person) > 18) {
@@ -64,7 +49,7 @@ public class SortDataService {
     return adults;
   }
 
-  public int childNumber(List<Person> persons) {
+  public int childNumber(List<Person> persons) throws RessourceNotFoundException, TooManyRessourcesFoundException {
     int children = 0;
     for (Person person : persons) {
       if (personAge(person) < 18) {
@@ -74,7 +59,8 @@ public class SortDataService {
     return children;
   }
 
-  public PersonMedicalInfoDTO createPersonInfo(Person person) {
+  public PersonMedicalInfoDTO createPersonInfo(Person person)
+      throws RessourceNotFoundException, TooManyRessourcesFoundException {
 
     PersonMedicalInfoDTO personInfo = new PersonMedicalInfoDTO();
     personInfo.setFirstname(person.getFirstName());

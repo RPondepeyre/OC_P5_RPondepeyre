@@ -40,14 +40,11 @@ public class PersonInfoServiceTest {
     @Test
     void personInfo() {
 
-        List<Person> persons = new ArrayList();
         Person person = new Person();
         person.setFirstName("firstName");
         person.setLastName("lastName");
         person.setAddress("address");
         person.setEmail("email");
-        persons.add(person);
-        persons.add(person);
         Medicalrecord record = new Medicalrecord();
         List<String> allergies = new ArrayList<>();
         allergies.add("allergies");
@@ -55,13 +52,13 @@ public class PersonInfoServiceTest {
         medications.add("medications");
         record.setAllergies(allergies);
         record.setMedications(medications);
-        doReturn(persons).when(personService).findByName(anyString(), anyString());
+        doReturn(person).when(personService).findByName(anyString(), anyString());
         doReturn(20).when(sortDataService).personAge(any(Person.class));
         doReturn(record).when(medicalrecordService).findByPerson(any(Person.class));
 
         List<PersonInfoDTO> result = service.personInfo("firstName", "lastName");
 
-        assertThat(result).hasSize(2);
+        assertThat(result).hasSize(1);
         assertThat(result.get(0).getMedications().get(0)).isEqualTo("medications");
         assertThat(result.get(0).getAllergies().get(0)).isEqualTo("allergies");
         assertThat(result.get(0).getFirstname()).isEqualTo("firstName");

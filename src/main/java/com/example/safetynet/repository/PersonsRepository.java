@@ -23,4 +23,12 @@ public class PersonsRepository {
     public List<Person> getAll() {
         return this.persons;
     }
+
+    public void update(int id, Person newperson) {
+        this.persons.set(id, newperson);
+    }
+
+    public void delete(Person person) {
+        this.persons.remove(person);
+    }
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.safetynet.DTO.ChildAlertDTO;
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Person;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,8 @@ public class ChildAlertService {
     @Autowired
     SortDataService sortDataService;
 
-    public List<ChildAlertDTO> childAlertDTO(String address) {
+    public List<ChildAlertDTO> childAlertDTO(String address)
+            throws RessourceNotFoundException, TooManyRessourcesFoundException {
         List<Person> rawlist = personService.findByAddress(address);
         List<ChildAlertDTO> result = new ArrayList<>();
         for (Person person : rawlist) {

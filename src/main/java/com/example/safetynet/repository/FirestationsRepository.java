@@ -24,4 +24,12 @@ public class FirestationsRepository {
         return this.firestations;
     }
 
+    public void update(int id, Firestation newfirestation) {
+        this.firestations.set(id, newfirestation);
+    }
+
+    public void delete(Firestation firestation) {
+        this.firestations.remove(firestation);
+    }
+
 }

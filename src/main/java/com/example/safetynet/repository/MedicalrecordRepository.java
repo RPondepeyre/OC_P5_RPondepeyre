@@ -24,4 +24,11 @@ public class MedicalrecordRepository {
         return this.medicalrecords;
     }
 
+    public void update(int id, Medicalrecord medicalrecord) {
+        this.medicalrecords.set(id, medicalrecord);
+    }
+
+    public void delete(Medicalrecord medicalrecord) {
+        this.medicalrecords.remove(medicalrecord);
+    }
 }

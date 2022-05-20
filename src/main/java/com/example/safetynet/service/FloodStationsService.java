@@ -6,6 +6,8 @@ import java.util.List;
 import com.example.safetynet.DTO.HouseDTO;
 import com.example.safetynet.DTO.PersonMedicalInfoDTO;
 import com.example.safetynet.DTO.StationHousesDTO;
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.model.Person;
 
@@ -24,7 +26,8 @@ public class FloodStationsService {
     @Autowired
     PersonService personService;
 
-    public List<StationHousesDTO> floodStationsHouses(List<Integer> stationsID) {
+    public List<StationHousesDTO> floodStationsHouses(List<Integer> stationsID)
+            throws RessourceNotFoundException, TooManyRessourcesFoundException {
         List<StationHousesDTO> result = new ArrayList<>();
         for (Integer station : stationsID) {
             StationHousesDTO housesDTO = new StationHousesDTO();

@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.example.safetynet.DTO.PersonsDTO;
 import com.example.safetynet.DTO.PersonsbyFirestationsDTO;
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Person;
 
 import org.slf4j.Logger;
@@ -20,7 +22,8 @@ public class PersonsbyFirestationService {
   @Autowired
   SortDataService service;
 
-  public PersonsbyFirestationsDTO personsbyFirestationDTO(int stationNumber) {
+  public PersonsbyFirestationsDTO personsbyFirestationDTO(int stationNumber)
+      throws RessourceNotFoundException, TooManyRessourcesFoundException {
     List<Person> rawlist = service.findPersonsbystation(stationNumber);
     if (!rawlist.isEmpty()) {
       PersonsbyFirestationsDTO result = new PersonsbyFirestationsDTO();

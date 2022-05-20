@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.example.safetynet.DTO.FireAddressDTO;
 import com.example.safetynet.DTO.PersonMedicalInfoDTO;
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Person;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,8 @@ public class FireAddressService {
     @Autowired
     SortDataService sortDataService;
 
-    public FireAddressDTO createFireAddressDTO(String address) {
+    public FireAddressDTO createFireAddressDTO(String address)
+            throws RessourceNotFoundException, TooManyRessourcesFoundException {
         FireAddressDTO result = new FireAddressDTO();
         result.setStation(firestationService.findByAddress(address).getStation());
         List<Person> rawlist = personService.findByAddress(address);
