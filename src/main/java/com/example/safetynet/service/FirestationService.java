@@ -50,7 +50,7 @@ public class FirestationService {
             logger.error(error);
             throw new RessourceNotFoundException(error);
         } else {
-            String error = String.format("Aucune stations trouvées pour l'adresse: %s", address);
+            String error = String.format("Plusieurs stations trouvées pour l'adresse: %s", address);
             logger.error(error);
             throw new TooManyRessourcesFoundException(error);
         }

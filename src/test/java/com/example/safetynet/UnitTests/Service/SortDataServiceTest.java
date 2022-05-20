@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.safetynet.DTO.PersonMedicalInfoDTO;
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.model.Medicalrecord;
 import com.example.safetynet.model.Person;
@@ -45,8 +47,6 @@ public class SortDataServiceTest {
     Medicalrecord record = new Medicalrecord();
     Medicalrecord adultrecord = new Medicalrecord();
     Medicalrecord childrecord = new Medicalrecord();
-    Person adult = new Person();
-    Person child = new Person();
 
     List<Person> persons = new ArrayList<>();
     List<Firestation> stations = new ArrayList<>();
@@ -82,15 +82,10 @@ public class SortDataServiceTest {
         childrecord.setLastName("child");
         childrecord.setBirthdate(LocalDate.now().minusYears(17));
 
-        adult.setFirstName("adult");
-        adult.setLastName("adult");
-
-        child.setFirstName("child");
-        child.setLastName("child");
     }
 
     @Test
-    void findPersonsbyStationTest() {
+    void findPersonsbyStationTest() throws RessourceNotFoundException {
 
         persons.add(person);
         stations.add(station);
@@ -104,100 +99,41 @@ public class SortDataServiceTest {
     }
 
     @Test
-    void personAgeTesttrue() {
-        persons.add(person);
-        records.add(record);
-        doReturn(records).when(medicalrecordService).findAllMedicalRecords();
+    void personAgeTesttrue() throws RessourceNotFoundException, TooManyRessourcesFoundException {
 
-        Person person = persons.get(0);
+        records.add(record);
+        doReturn(record).when(medicalrecordService).findByPerson(person);
         int result = service.personAge(person);
 
         assertThat(result).isEqualTo(20);
     }
 
     @Test
-    void personAgeTestnorecordfirstname() {
-        persons.add(person);
-        Medicalrecord record = new Medicalrecord();
-        record.setFirstName("null");
-        record.setLastName("null");
-        records.add(record);
-        doReturn(records).when(medicalrecordService).findAllMedicalRecords();
+    void adultNumberTest() throws RessourceNotFoundException, TooManyRessourcesFoundException {
 
-        Person person = persons.get(0);
-        int result = service.personAge(person);
-
-        assertThat(logCaptor.getErrorLogs()).containsExactly("No Medical Record found for this person");
-        assertThat(result).isZero();
-    }
-
-    @Test
-    void personAgeTestnorecordlastname() {
-        persons.add(person);
-        records.clear();
-        Medicalrecord record = new Medicalrecord();
-        record.setFirstName("firstName");
-        record.setLastName("null");
-        records.add(record);
-        doReturn(records).when(medicalrecordService).findAllMedicalRecords();
-
-        Person person = persons.get(0);
-        int result = service.personAge(person);
-
-        assertThat(logCaptor.getErrorLogs()).containsExactly("No Medical Record found for this person");
-        assertThat(result).isZero();
-    }
-
-    @Test
-    void personAgeTestmultiple() {
-        records.add(record);
-        records.add(record);
-        persons.add(person);
-        doReturn(records).when(medicalrecordService).findAllMedicalRecords();
-
-        Person person = persons.get(0);
-        int result = service.personAge(person);
-
-        assertThat(logCaptor.getErrorLogs())
-                .containsExactly("Multiple persons with this firstname and lastname combination founded");
-        assertThat(result).isZero();
-    }
-
-    @Test
-    void adultNumberTest() {
-        records.add(adultrecord);
-        records.add(childrecord);
-        doReturn(records).when(medicalrecordService).findAllMedicalRecords();
-        for (int i = 0; i < 5; i++) {
-            persons.add(adult);
+        doReturn(adultrecord, childrecord).when(medicalrecordService).findByPerson(any(Person.class));
+        for (int i = 0; i < 2; i++) {
+            persons.add(person);
         }
-        for (int i = 0; i < 3; i++) {
-            persons.add(child);
-        }
-        assertThat(service.adultNumber(persons)).isEqualTo(5);
+        assertThat(service.adultNumber(persons)).isEqualTo(1);
 
     }
 
     @Test
-    void childNumberTest() {
-        records.add(adultrecord);
-        records.add(childrecord);
-        doReturn(records).when(medicalrecordService).findAllMedicalRecords();
-        for (int i = 0; i < 5; i++) {
-            persons.add(adult);
+    void childNumberTest() throws RessourceNotFoundException, TooManyRessourcesFoundException {
+
+        doReturn(childrecord, adultrecord).when(medicalrecordService).findByPerson(any(Person.class));
+        for (int i = 0; i < 2; i++) {
+            persons.add(person);
         }
-        for (int i = 0; i < 3; i++) {
-            persons.add(child);
-        }
-        assertThat(service.childNumber(persons)).isEqualTo(3);
+        assertThat(service.childNumber(persons)).isEqualTo(1);
 
     }
 
     @Test
-    void personMedicalInfoTest() {
+    void personMedicalInfoTest() throws RessourceNotFoundException, TooManyRessourcesFoundException {
         records.add(record);
         doReturn(record).when(medicalrecordService).findByPerson(any(Person.class));
-        doReturn(records).when(medicalrecordService).findAllMedicalRecords();
         PersonMedicalInfoDTO result = service.createPersonInfo(person);
 
         assertThat(result.getFirstname()).isEqualTo("firstName");

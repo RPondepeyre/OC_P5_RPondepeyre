@@ -1,6 +1,7 @@
 package com.example.safetynet.UnitTests.Service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -8,6 +9,8 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Medicalrecord;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.repository.MedicalrecordRepository;
@@ -43,7 +46,7 @@ public class MedicalrecordServiceTest {
     }
 
     @Test
-    void findByPersonTrue() {
+    void findByPersonTrue() throws RessourceNotFoundException, TooManyRessourcesFoundException {
         Person person = new Person();
         person.setFirstName("firstName");
         person.setLastName("lastName");
@@ -65,7 +68,7 @@ public class MedicalrecordServiceTest {
     }
 
     @Test
-    void findByPersonEmpty() {
+    void findByPersonEmpty() throws RessourceNotFoundException, TooManyRessourcesFoundException {
         Person person = new Person();
         person.setFirstName("firstName");
         person.setLastName("lastNamefalse");
@@ -80,15 +83,19 @@ public class MedicalrecordServiceTest {
 
         doReturn(records).when(repository).getAll();
 
-        Medicalrecord result = service.findByPerson(person);
+        RessourceNotFoundException thrown = assertThrows(RessourceNotFoundException.class,
+                () -> {
+                    service.findByPerson(person);
 
-        assertThat(result).isNull();
-        assertThat(logCaptor.getErrorLogs()).containsExactly("Aucun dossier médical trouvé pour cette personne");
+                });
+        assertThat(thrown.getMessage()).isEqualTo("Aucun dossier médical trouvé pour le nom: firstName lastNamefalse");
+        assertThat(logCaptor.getErrorLogs())
+                .containsExactly("Aucun dossier médical trouvé pour le nom: firstName lastNamefalse");
 
     }
 
     @Test
-    void findByPersonEmptyfilter() {
+    void findByPersonEmptyfilter() throws RessourceNotFoundException, TooManyRessourcesFoundException {
         Person person = new Person();
         person.setFirstName("firstNamefalse");
         person.setLastName("lastName");
@@ -103,15 +110,19 @@ public class MedicalrecordServiceTest {
 
         doReturn(records).when(repository).getAll();
 
-        Medicalrecord result = service.findByPerson(person);
+        RessourceNotFoundException thrown = assertThrows(RessourceNotFoundException.class,
+                () -> {
+                    service.findByPerson(person);
 
-        assertThat(result).isNull();
-        assertThat(logCaptor.getErrorLogs()).containsExactly("Aucun dossier médical trouvé pour cette personne");
+                });
+        assertThat(thrown.getMessage()).isEqualTo("Aucun dossier médical trouvé pour le nom: firstNamefalse lastName");
+        assertThat(logCaptor.getErrorLogs())
+                .containsExactly("Aucun dossier médical trouvé pour le nom: firstNamefalse lastName");
 
     }
 
     @Test
-    void findByPersonMultiple() {
+    void findByPersonMultiple() throws RessourceNotFoundException, TooManyRessourcesFoundException {
         Person person = new Person();
         person.setFirstName("firstName");
         person.setLastName("lastName");
@@ -127,11 +138,23 @@ public class MedicalrecordServiceTest {
 
         doReturn(records).when(repository).getAll();
 
-        Medicalrecord result = service.findByPerson(person);
+        TooManyRessourcesFoundException thrown = assertThrows(TooManyRessourcesFoundException.class,
+                () -> {
+                    service.findByPerson(person);
 
-        assertThat(result).isNull();
-        assertThat(logCaptor.getErrorLogs()).containsExactly("Plusieurs dossiers medicaux trouvés pour cette personne");
+                });
+        assertThat(thrown.getMessage())
+                .isEqualTo("Plusieurs dossiers médicaux trouvés pour le nom: firstName lastName");
+        assertThat(logCaptor.getErrorLogs())
+                .containsExactly("Plusieurs dossiers médicaux trouvés pour le nom: firstName lastName");
 
+    }
+
+    @Test
+    void addMedicalRecordTest() {
+        Medicalrecord medicalrecord = new Medicalrecord();
+        service.addMedicalRecord(medicalrecord);
+        verify(repository).add(medicalrecord);
     }
 
 }

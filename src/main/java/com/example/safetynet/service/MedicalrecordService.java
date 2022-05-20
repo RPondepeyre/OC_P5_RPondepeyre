@@ -37,12 +37,12 @@ public class MedicalrecordService {
         if (records.size() == 1) {
             return records.get(0);
         } else if (records.isEmpty()) {
-            String error = String.format("Aucun dossier médical trouvé pour le nom: %s %s ", person.getFirstName(),
+            String error = String.format("Aucun dossier médical trouvé pour le nom: %s %s", person.getFirstName(),
                     person.getLastName());
             logger.error(error);
             throw new RessourceNotFoundException(error);
         } else {
-            String error = String.format("Plusieurs dossiers médicaux trouvés pour le nom: %s %s ",
+            String error = String.format("Plusieurs dossiers médicaux trouvés pour le nom: %s %s",
                     person.getFirstName(),
                     person.getLastName());
             logger.error(error);

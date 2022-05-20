@@ -12,6 +12,8 @@ import java.util.List;
 
 import com.example.safetynet.DTO.FireAddressDTO;
 import com.example.safetynet.DTO.PersonMedicalInfoDTO;
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.service.FireAddressService;
@@ -41,7 +43,7 @@ public class FireAddressServiceTest {
     FireAddressService service;
 
     @Test
-    void createFireAddressDTOTest() {
+    void createFireAddressDTOTest() throws RessourceNotFoundException, TooManyRessourcesFoundException {
 
         Firestation firestation = new Firestation();
         firestation.setStation(1);

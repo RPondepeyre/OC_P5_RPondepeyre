@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.service.PhoneAlertService;
 import com.example.safetynet.service.SortDataService;
@@ -28,7 +29,7 @@ public class PhoneAlertServiceTest {
     PhoneAlertService service;
 
     @Test
-    void createPhoneListTest() {
+    void createPhoneListTest() throws RessourceNotFoundException {
         List<Person> persons = new ArrayList<>();
 
         Person person1 = new Person();

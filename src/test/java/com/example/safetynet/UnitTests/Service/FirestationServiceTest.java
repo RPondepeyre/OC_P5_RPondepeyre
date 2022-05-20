@@ -1,12 +1,18 @@
 package com.example.safetynet.UnitTests.Service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.repository.FirestationsRepository;
 import com.example.safetynet.service.FirestationService;
@@ -41,7 +47,7 @@ public class FirestationServiceTest {
     }
 
     @Test
-    void findByStationTest() {
+    void findByStationTest() throws RessourceNotFoundException {
 
         List<Firestation> rawlist = new ArrayList<>();
 
@@ -64,7 +70,19 @@ public class FirestationServiceTest {
     }
 
     @Test
-    void findByAddressTestTrue() {
+    void findByStationTestFalse() {
+        List<Firestation> rawlist = new ArrayList<>();
+        when(repository.getAll()).thenReturn(rawlist);
+        RessourceNotFoundException thrown = assertThrows(RessourceNotFoundException.class,
+                () -> {
+                    service.findByStation(1);
+                });
+        assertThat(thrown.getMessage()).isEqualTo("La station n° 1 n'existe pas");
+        assertThat(logCaptor.getErrorLogs()).containsExactly("La station n° 1 n'existe pas");
+    }
+
+    @Test
+    void findByAddressTestTrue() throws RessourceNotFoundException, TooManyRessourcesFoundException {
 
         List<Firestation> rawlist = new ArrayList<>();
 
@@ -86,18 +104,21 @@ public class FirestationServiceTest {
     }
 
     @Test
-    void findByAddressTestEmpty() {
+    void findByAddressTestEmpty() throws RessourceNotFoundException, TooManyRessourcesFoundException {
 
         List<Firestation> rawlist = new ArrayList<>();
 
         when(repository.getAll()).thenReturn(rawlist);
-        Firestation result = service.findByAddress("true");
-        assertThat(result).isNull();
-        assertThat(logCaptor.getErrorLogs()).containsExactly("Aucune station trouvée pour cette addresse");
+        RessourceNotFoundException thrown = assertThrows(RessourceNotFoundException.class,
+                () -> {
+                    service.findByAddress("true");
+                });
+        assertThat(thrown.getMessage()).isEqualTo("Aucune station trouvée pour l'adresse: true");
+        assertThat(logCaptor.getErrorLogs()).containsExactly("Aucune station trouvée pour l'adresse: true");
     }
 
     @Test
-    void findByAddressTesttoManyStations() {
+    void findByAddressTesttoManyStations() throws RessourceNotFoundException, TooManyRessourcesFoundException {
 
         List<Firestation> rawlist = new ArrayList<>();
 
@@ -113,9 +134,48 @@ public class FirestationServiceTest {
         rawlist.add(station2);
 
         when(repository.getAll()).thenReturn(rawlist);
-        service.findByAddress("true");
-        assertThat(logCaptor.getErrorLogs()).containsExactly("Plusieurs stations trouvées pour cette addresse");
+
+        TooManyRessourcesFoundException thrown = assertThrows(TooManyRessourcesFoundException.class,
+                () -> {
+                    service.findByAddress("true");
+                });
+        assertThat(thrown.getMessage()).isEqualTo("Plusieurs stations trouvées pour l'adresse: true");
+        assertThat(logCaptor.getErrorLogs()).containsExactly("Plusieurs stations trouvées pour l'adresse: true");
 
     }
 
+    @Test
+    void addFirestationTest() {
+        Firestation firestation = new Firestation();
+        service.addFirestation(firestation);
+        verify(repository).add(firestation);
+    }
+
+    @Test
+    void updateFirestationTest() throws RessourceNotFoundException, TooManyRessourcesFoundException {
+        Firestation firestation1 = new Firestation();
+        firestation1.setAddress("address");
+        firestation1.setStation(1);
+
+        Firestation newstation = new Firestation();
+        newstation.setAddress("address");
+        newstation.setStation(2);
+        List<Firestation> stations = new ArrayList<>();
+        stations.add(newstation);
+
+        Firestation fakestation = new Firestation();
+        fakestation.setAddress("fake");
+        fakestation.setStation(3);
+
+        List<Firestation> baselist = new ArrayList<>();
+        baselist.add(firestation1);
+        baselist.add(fakestation);
+
+        doReturn(baselist).when(repository).getAll();
+
+        Firestation result = service.updateFirestation(newstation);
+        verify(repository).update(anyInt(), any(Firestation.class));
+        assertThat(result.getStation()).isEqualTo(2);
+
+    }
 }

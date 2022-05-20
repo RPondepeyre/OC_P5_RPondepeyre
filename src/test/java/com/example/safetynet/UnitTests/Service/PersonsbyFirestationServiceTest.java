@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.safetynet.DTO.PersonsbyFirestationsDTO;
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.service.PersonsbyFirestationService;
 import com.example.safetynet.service.SortDataService;
@@ -40,7 +42,7 @@ public class PersonsbyFirestationServiceTest {
     }
 
     @Test
-    void PersonsbyFirestationsDTOTesttrue() {
+    void PersonsbyFirestationsDTOTesttrue() throws RessourceNotFoundException, TooManyRessourcesFoundException {
 
         Person person = new Person();
         person.setFirstName("firstName");
@@ -68,7 +70,7 @@ public class PersonsbyFirestationServiceTest {
     }
 
     @Test
-    void PersonsbyFirestationsDTOTestfalse() {
+    void PersonsbyFirestationsDTOTestfalse() throws RessourceNotFoundException, TooManyRessourcesFoundException {
 
         when(sortDataService.findPersonsbystation((anyInt()))).thenReturn(rawlist);
         PersonsbyFirestationsDTO result = service.personsbyFirestationDTO(0);

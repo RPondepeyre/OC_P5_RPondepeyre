@@ -10,6 +10,8 @@ import java.util.List;
 
 import com.example.safetynet.DTO.PersonMedicalInfoDTO;
 import com.example.safetynet.DTO.StationHousesDTO;
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.service.FirestationService;
@@ -39,7 +41,7 @@ public class FloodStationServiceTest {
     FloodStationsService service;
 
     @Test
-    void floodStationsHousesTest() {
+    void floodStationsHousesTest() throws RessourceNotFoundException, TooManyRessourcesFoundException {
 
         List<Firestation> stations = new ArrayList<>();
         Firestation station = new Firestation();

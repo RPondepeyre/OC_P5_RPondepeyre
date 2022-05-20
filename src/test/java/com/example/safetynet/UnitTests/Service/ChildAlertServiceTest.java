@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.safetynet.DTO.ChildAlertDTO;
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.service.ChildAlertService;
 import com.example.safetynet.service.PersonService;
@@ -35,7 +37,7 @@ public class ChildAlertServiceTest {
     ChildAlertService service;
 
     @Test
-    void childAlertDTOTest() {
+    void childAlertDTOTest() throws RessourceNotFoundException, TooManyRessourcesFoundException {
         Person person = new Person();
         person.setFirstName("firstName");
         person.setLastName("lastName");

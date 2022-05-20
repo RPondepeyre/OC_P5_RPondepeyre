@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.safetynet.DTO.PersonInfoDTO;
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Medicalrecord;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.service.MedicalrecordService;
@@ -38,7 +40,7 @@ public class PersonInfoServiceTest {
     PersonInfoService service;
 
     @Test
-    void personInfo() {
+    void personInfo() throws RessourceNotFoundException, TooManyRessourcesFoundException {
 
         Person person = new Person();
         person.setFirstName("firstName");

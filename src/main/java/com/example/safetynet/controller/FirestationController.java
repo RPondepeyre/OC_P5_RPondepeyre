@@ -1,6 +1,7 @@
 package com.example.safetynet.controller;
 
 import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.service.FirestationService;
 
@@ -31,7 +32,7 @@ public class FirestationController {
 
     @PutMapping("/firestation")
     public ResponseEntity<Firestation> updateFirestation(@RequestBody Firestation newfirestation)
-            throws RessourceNotFoundException {
+            throws RessourceNotFoundException, TooManyRessourcesFoundException {
         Firestation firestation = firestationService.updateFirestation(newfirestation);
         if (firestation == null) {
             return null;
@@ -41,7 +42,8 @@ public class FirestationController {
     }
 
     @DeleteMapping("/firestation")
-    public ResponseEntity<Firestation> deleteFirestation(@RequestBody Firestation newfirestation) {
+    public ResponseEntity<Firestation> deleteFirestation(@RequestBody Firestation newfirestation)
+            throws RessourceNotFoundException, TooManyRessourcesFoundException {
         Firestation firestation = firestationService.deleteFirestation(newfirestation);
         if (firestation == null) {
             return null;

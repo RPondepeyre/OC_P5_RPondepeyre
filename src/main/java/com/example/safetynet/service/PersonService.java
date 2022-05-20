@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonService {
 
-    private static final Logger logger = LoggerFactory.getLogger(MedicalrecordService.class);
+    private static final Logger logger = LoggerFactory.getLogger(PersonService.class);
 
     @Autowired
     PersonsRepository repository;
@@ -38,12 +38,12 @@ public class PersonService {
         if (persons.size() == 1) {
             return persons.get(0);
         } else if (persons.isEmpty()) {
-            String error = String.format("Aucune personne trouvée pour le nom: %s %s ", firstName, lastName);
+            String error = String.format("Aucune personne trouvée pour le nom: %s %s", firstName, lastName);
             logger.error(error);
             throw new RessourceNotFoundException(error);
 
         } else {
-            String error = String.format("Plusieurs personnes trouvées pour le nom: %s %s ", firstName, lastName);
+            String error = String.format("Plusieurs personnes trouvées pour le nom: %s %s", firstName, lastName);
             logger.error(error);
             throw new TooManyRessourcesFoundException(error);
         }
