@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import nl.altindag.log.LogCaptor;
@@ -176,6 +177,73 @@ public class FirestationServiceTest {
         Firestation result = service.updateFirestation(newstation);
         verify(repository).update(anyInt(), any(Firestation.class));
         assertThat(result.getStation()).isEqualTo(2);
+
+    }
+
+    @Test
+    void deleteFirestationTestsingle() throws RessourceNotFoundException, TooManyRessourcesFoundException {
+        Firestation oldstation = new Firestation();
+        oldstation.setAddress("address");
+        oldstation.setStation(1);
+        List<Firestation> firestations = new ArrayList<>();
+        firestations.add(oldstation);
+
+        doReturn(firestations).when(repository).getAll();
+        Firestation firestation = new Firestation();
+
+        firestation.setAddress("address");
+
+        service.deleteFirestation(firestation);
+
+        verify(repository, Mockito.times(1)).delete(any(Firestation.class));
+
+    }
+
+    @Test
+    void deleteFirestationTestsingleFull() throws RessourceNotFoundException, TooManyRessourcesFoundException {
+        Firestation oldstation1 = new Firestation();
+        oldstation1.setAddress("address");
+        oldstation1.setStation(1);
+
+        Firestation oldstation2 = new Firestation();
+        oldstation2.setAddress("address2");
+        oldstation2.setStation(1);
+        List<Firestation> firestations = new ArrayList<>();
+        firestations.add(oldstation1);
+        firestations.add(oldstation2);
+        doReturn(firestations).when(repository).getAll();
+        Firestation firestation = new Firestation();
+
+        firestation.setAddress("address");
+        firestation.setStation(1);
+
+        service.deleteFirestation(firestation);
+
+        verify(repository, Mockito.times(1)).delete(any(Firestation.class));
+
+    }
+
+    @Test
+    void deleteFirestationTestmultiple() throws RessourceNotFoundException, TooManyRessourcesFoundException {
+        Firestation oldstation1 = new Firestation();
+        oldstation1.setAddress("address");
+        oldstation1.setStation(1);
+
+        Firestation oldstation2 = new Firestation();
+        oldstation2.setAddress("address2");
+        oldstation2.setStation(1);
+        List<Firestation> firestations = new ArrayList<>();
+        firestations.add(oldstation1);
+        firestations.add(oldstation2);
+
+        doReturn(firestations).when(repository).getAll();
+        Firestation firestation = new Firestation();
+
+        firestation.setStation(1);
+
+        service.deleteFirestation(firestation);
+
+        verify(repository, Mockito.times(2)).delete(any(Firestation.class));
 
     }
 }

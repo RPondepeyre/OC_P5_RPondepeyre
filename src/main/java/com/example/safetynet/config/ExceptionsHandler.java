@@ -18,7 +18,7 @@ public class ExceptionsHandler {
     }
 
     @ExceptionHandler(value = TooManyRessourcesFoundException.class)
-    public ResponseEntity<String> tooManyressources(RessourceNotFoundException e) {
+    public ResponseEntity<String> tooManyressources(TooManyRessourcesFoundException e) {
         String error = e.getMessage();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }

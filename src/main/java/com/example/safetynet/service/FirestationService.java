@@ -72,14 +72,13 @@ public class FirestationService {
 
     }
 
-    // ?????
     public Firestation deleteFirestation(Firestation firestation)
             throws RessourceNotFoundException, TooManyRessourcesFoundException {
         if (firestation.getAddress() != null) {
             Firestation deletefirestation = findByAddress(firestation.getAddress());
             repository.delete(deletefirestation);
         }
-        if (firestation.getStation() != null) {
+        if (firestation.getStation() != null && firestation.getAddress() == null) {
             List<Firestation> firestations = findByStation(firestation.getStation());
             for (Firestation deletefirestation : firestations) {
                 repository.delete(deletefirestation);

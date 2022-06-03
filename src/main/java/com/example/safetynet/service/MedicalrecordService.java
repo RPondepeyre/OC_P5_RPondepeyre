@@ -65,7 +65,7 @@ public class MedicalrecordService {
                 newrecord.getMedications() != null ? newrecord.getMedications() : medrecord.getMedications());
         medrecord.setAllergies(newrecord.getAllergies() != null ? newrecord.getAllergies() : medrecord.getAllergies());
         repository.update(findAllMedicalRecords().indexOf(oldrecord), medrecord);
-        return newrecord;
+        return medrecord;
     }
 
     public Medicalrecord deleteMedicalrecord(Medicalrecord medicalrecord)

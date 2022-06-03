@@ -3,6 +3,13 @@ package com.example.safetynet.controller;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.safetynet.DTO.ChildAlertDTO;
 import com.example.safetynet.DTO.FireAddressDTO;
 import com.example.safetynet.DTO.PersonInfoDTO;
@@ -17,13 +24,6 @@ import com.example.safetynet.service.FloodStationsService;
 import com.example.safetynet.service.PersonInfoService;
 import com.example.safetynet.service.PersonsbyFirestationService;
 import com.example.safetynet.service.PhoneAlertService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class GetController {
@@ -126,7 +126,7 @@ public class GetController {
 
     // http://localhost:8080/communityEmail?city=<city>
     @GetMapping("/communityEmail")
-    public ResponseEntity<Set<String>> personInfo(@RequestParam String city) {
+    public ResponseEntity<Set<String>> communityEmail(@RequestParam String city) {
         Set<String> result = communityEmailService.communityEmail(city);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);

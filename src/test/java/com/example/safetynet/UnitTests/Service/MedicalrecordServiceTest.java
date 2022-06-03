@@ -2,10 +2,13 @@ package com.example.safetynet.UnitTests.Service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +18,7 @@ import com.example.safetynet.model.Medicalrecord;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.repository.MedicalrecordRepository;
 import com.example.safetynet.service.MedicalrecordService;
+import com.example.safetynet.service.PersonService;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +35,9 @@ public class MedicalrecordServiceTest {
 
     @Mock
     MedicalrecordRepository repository;
+
+    @Mock
+    PersonService personService;
 
     @InjectMocks
     MedicalrecordService service;
@@ -155,6 +162,115 @@ public class MedicalrecordServiceTest {
         Medicalrecord medicalrecord = new Medicalrecord();
         service.addMedicalRecord(medicalrecord);
         verify(repository).add(medicalrecord);
+    }
+
+    @Test
+    void updateMedicalRecordTestNotNull() throws RessourceNotFoundException, TooManyRessourcesFoundException {
+        Medicalrecord record = new Medicalrecord();
+        record.setFirstName("firstName");
+        record.setLastName("lastName");
+        LocalDate birthdate = LocalDate.of(2000, 01, 01);
+        List<String> allergies = new ArrayList<>();
+        List<String> medications = new ArrayList<>();
+        allergies.add("allergie");
+        medications.add("medications");
+        record.setBirthdate(birthdate);
+        record.setAllergies(allergies);
+        record.setMedications(medications);
+
+        Person person = new Person();
+        person.setFirstName("firstName");
+        person.setLastName("lastName");
+
+        Medicalrecord oldrecord = new Medicalrecord();
+        oldrecord.setFirstName("firstName");
+        oldrecord.setLastName("lastName");
+        List<Medicalrecord> recordlist = new ArrayList<>();
+        recordlist.add(oldrecord);
+
+        doReturn(person).when(personService).findByName("firstName", "lastName");
+        doReturn(recordlist).when(repository).getAll();
+
+        Medicalrecord result = service.updateMedicalrecord(record);
+
+        verify(repository).update(anyInt(), any(Medicalrecord.class));
+        assertThat(result.getAllergies()).isEqualTo(record.getAllergies());
+        assertThat(result.getBirthdate()).isEqualTo(record.getBirthdate());
+        assertThat(result.getMedications()).isEqualTo(record.getMedications());
+
+    }
+
+    @Test
+    void updateMedicalRecordTestNull() throws RessourceNotFoundException, TooManyRessourcesFoundException {
+        Medicalrecord record = new Medicalrecord();
+        record.setFirstName("firstName");
+        record.setLastName("lastName");
+
+        Person person = new Person();
+        person.setFirstName("firstName");
+        person.setLastName("lastName");
+
+        Medicalrecord oldrecord = new Medicalrecord();
+        oldrecord.setFirstName("firstName");
+        oldrecord.setLastName("lastName");
+        LocalDate birthdate = LocalDate.of(2000, 01, 01);
+        List<String> allergies = new ArrayList<>();
+        List<String> medications = new ArrayList<>();
+        allergies.add("allergie");
+        medications.add("medications");
+        oldrecord.setBirthdate(birthdate);
+        oldrecord.setAllergies(allergies);
+        oldrecord.setMedications(medications);
+
+        List<Medicalrecord> recordlist = new ArrayList<>();
+        recordlist.add(oldrecord);
+
+        doReturn(person).when(personService).findByName("firstName", "lastName");
+        doReturn(recordlist).when(repository).getAll();
+
+        Medicalrecord result = service.updateMedicalrecord(record);
+
+        verify(repository).update(anyInt(), any(Medicalrecord.class));
+        assertThat(result.getAllergies()).isEqualTo(oldrecord.getAllergies());
+        assertThat(result.getBirthdate()).isEqualTo(oldrecord.getBirthdate());
+        assertThat(result.getMedications()).isEqualTo(oldrecord.getMedications());
+
+    }
+
+    @Test
+    void deleteMedicalrecordTest() throws RessourceNotFoundException, TooManyRessourcesFoundException {
+        Medicalrecord record = new Medicalrecord();
+        record.setFirstName("firstName");
+        record.setLastName("lastName");
+
+        Person person = new Person();
+        person.setFirstName("firstName");
+        person.setLastName("lastName");
+
+        Medicalrecord oldrecord = new Medicalrecord();
+        oldrecord.setFirstName("firstName");
+        oldrecord.setLastName("lastName");
+        LocalDate birthdate = LocalDate.of(2000, 01, 01);
+        List<String> allergies = new ArrayList<>();
+        List<String> medications = new ArrayList<>();
+        allergies.add("allergie");
+        medications.add("medications");
+        oldrecord.setBirthdate(birthdate);
+        oldrecord.setAllergies(allergies);
+        oldrecord.setMedications(medications);
+
+        List<Medicalrecord> recordlist = new ArrayList<>();
+        recordlist.add(oldrecord);
+        doReturn(person).when(personService).findByName("firstName", "lastName");
+        doReturn(recordlist).when(repository).getAll();
+
+        Medicalrecord result = service.deleteMedicalrecord(record);
+
+        verify(repository).delete(any(Medicalrecord.class));
+        assertThat(result.getAllergies()).isEqualTo(oldrecord.getAllergies());
+        assertThat(result.getBirthdate()).isEqualTo(oldrecord.getBirthdate());
+        assertThat(result.getMedications()).isEqualTo(oldrecord.getMedications());
+
     }
 
 }
