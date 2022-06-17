@@ -1,10 +1,5 @@
 package com.example.safetynet.controller;
 
-import com.example.safetynet.config.exceptions.RessourceNotFoundException;
-import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
-import com.example.safetynet.model.Medicalrecord;
-import com.example.safetynet.service.MedicalrecordService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
+import com.example.safetynet.model.Medicalrecord;
+import com.example.safetynet.service.MedicalrecordService;
 
 @RestController
 public class MedicalRecordController {

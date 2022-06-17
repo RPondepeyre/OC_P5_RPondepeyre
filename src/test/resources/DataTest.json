@@ -10,7 +10,9 @@
         { "address": "address1", "station": "1" },
         { "address": "address2", "station": "1" },
         { "address": "address3", "station": "2" },
-        { "address": "address4", "station": "2" }
+        { "address": "address4", "station": "2" },
+        { "address": "address5", "station": "5" }
+
 
     ],
     "medicalrecords": [
