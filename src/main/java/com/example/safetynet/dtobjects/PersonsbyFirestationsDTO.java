@@ -1,4 +1,4 @@
-package com.example.safetynet.DTO;
+package com.example.safetynet.dtobjects;
 
 import java.util.List;
 

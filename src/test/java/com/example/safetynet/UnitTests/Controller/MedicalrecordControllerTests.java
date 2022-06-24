@@ -1,6 +1,7 @@
 package com.example.safetynet.UnitTests.Controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import com.example.safetynet.config.exceptions.RessourceNotFoundException;
 import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
 import com.example.safetynet.controller.MedicalRecordController;
+import com.example.safetynet.dtobjects.MedicalrecordDTO;
 import com.example.safetynet.model.Medicalrecord;
 import com.example.safetynet.service.MedicalrecordService;
 
@@ -27,38 +29,44 @@ public class MedicalrecordControllerTests {
 
     @Test
     void addMedicalrecordTest() {
-        Medicalrecord medicalrecord = new Medicalrecord();
+        Medicalrecord mr = new Medicalrecord();
+        MedicalrecordDTO medicalrecordDTO = new MedicalrecordDTO();
+        medicalrecordDTO.setBirthdate("01/01/2000");
 
-        doReturn(medicalrecord).when(service).addMedicalRecord(medicalrecord);
+        doReturn(mr).when(service).addMedicalRecord(any());
 
-        ResponseEntity<Medicalrecord> result = controller.addmedicalrecord(medicalrecord);
+        ResponseEntity<Medicalrecord> result = controller.addmedicalrecord(medicalrecordDTO);
 
-        verify(service).addMedicalRecord(medicalrecord);
+        verify(service).addMedicalRecord(any());
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(result.getBody()).isEqualTo(medicalrecord);
+        assertThat(result.getBody()).isEqualTo(mr);
     }
 
     @Test
     void addMedicalrecordTestNull() {
         Medicalrecord medicalrecord = null;
+        MedicalrecordDTO medicalrecordDTO = new MedicalrecordDTO();
+        medicalrecordDTO.setBirthdate("01/01/2000");
 
-        doReturn(medicalrecord).when(service).addMedicalRecord(medicalrecord);
+        doReturn(medicalrecord).when(service).addMedicalRecord(any());
 
-        ResponseEntity<Medicalrecord> result = controller.addmedicalrecord(medicalrecord);
+        ResponseEntity<Medicalrecord> result = controller.addmedicalrecord(medicalrecordDTO);
 
-        verify(service).addMedicalRecord(medicalrecord);
+        verify(service).addMedicalRecord(any());
         assertThat(result).isNull();
     }
 
     @Test
     void updateMedicalrecordTest() throws RessourceNotFoundException, TooManyRessourcesFoundException {
         Medicalrecord Medicalrecord = new Medicalrecord();
+        MedicalrecordDTO medicalrecordDTO = new MedicalrecordDTO();
+        medicalrecordDTO.setBirthdate("01/01/2000");
 
-        doReturn(Medicalrecord).when(service).updateMedicalrecord(Medicalrecord);
+        doReturn(Medicalrecord).when(service).updateMedicalrecord(any());
 
-        ResponseEntity<Medicalrecord> result = controller.updatemedicalrecord(Medicalrecord);
+        ResponseEntity<Medicalrecord> result = controller.updatemedicalrecord(medicalrecordDTO);
 
-        verify(service).updateMedicalrecord(Medicalrecord);
+        verify(service).updateMedicalrecord(any());
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(result.getBody()).isEqualTo(Medicalrecord);
     }
@@ -66,12 +74,14 @@ public class MedicalrecordControllerTests {
     @Test
     void updateMedicalrecordTestNull() throws RessourceNotFoundException, TooManyRessourcesFoundException {
         Medicalrecord Medicalrecord = null;
+        MedicalrecordDTO medicalrecordDTO = new MedicalrecordDTO();
+        medicalrecordDTO.setBirthdate("01/01/2000");
 
-        doReturn(Medicalrecord).when(service).updateMedicalrecord(Medicalrecord);
+        doReturn(Medicalrecord).when(service).updateMedicalrecord(any());
 
-        ResponseEntity<Medicalrecord> result = controller.updatemedicalrecord(Medicalrecord);
+        ResponseEntity<Medicalrecord> result = controller.updatemedicalrecord(medicalrecordDTO);
 
-        verify(service).updateMedicalrecord(Medicalrecord);
+        verify(service).updateMedicalrecord(any());
         assertThat(result).isNull();
     }
 

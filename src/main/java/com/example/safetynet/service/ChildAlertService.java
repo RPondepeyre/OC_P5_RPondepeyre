@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.safetynet.DTO.ChildAlertDTO;
-import com.example.safetynet.config.exceptions.RessourceNotFoundException;
-import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
-import com.example.safetynet.model.Person;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
+import com.example.safetynet.dtobjects.ChildAlertDTO;
+import com.example.safetynet.model.Person;
 
 @Service
 public class ChildAlertService {

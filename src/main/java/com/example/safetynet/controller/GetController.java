@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.safetynet.DTO.ChildAlertDTO;
-import com.example.safetynet.DTO.FireAddressDTO;
-import com.example.safetynet.DTO.PersonInfoDTO;
-import com.example.safetynet.DTO.PersonsbyFirestationsDTO;
-import com.example.safetynet.DTO.StationHousesDTO;
 import com.example.safetynet.config.exceptions.RessourceNotFoundException;
 import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
+import com.example.safetynet.dtobjects.ChildAlertDTO;
+import com.example.safetynet.dtobjects.FireAddressDTO;
+import com.example.safetynet.dtobjects.PersonInfoDTO;
+import com.example.safetynet.dtobjects.PersonsbyFirestationsDTO;
+import com.example.safetynet.dtobjects.StationHousesDTO;
 import com.example.safetynet.service.ChildAlertService;
 import com.example.safetynet.service.CommunityEmailService;
 import com.example.safetynet.service.FireAddressService;

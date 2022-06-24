@@ -8,21 +8,21 @@ import static org.mockito.Mockito.doReturn;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.safetynet.DTO.PersonInfoDTO;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import com.example.safetynet.config.exceptions.RessourceNotFoundException;
 import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
+import com.example.safetynet.dtobjects.PersonInfoDTO;
 import com.example.safetynet.model.Medicalrecord;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.service.MedicalrecordService;
 import com.example.safetynet.service.PersonInfoService;
 import com.example.safetynet.service.PersonService;
 import com.example.safetynet.service.SortDataService;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class PersonInfoServiceTest {

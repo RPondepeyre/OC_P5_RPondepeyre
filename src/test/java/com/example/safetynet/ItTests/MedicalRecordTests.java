@@ -35,16 +35,18 @@ public class MedicalRecordTests {
 
     @BeforeEach
     void SetUp() {
-        person.setFirstName("prenom");
-        person.setLastName("nom");
+
     }
 
     @Test
     void post() throws Exception {
 
+        person.setFirstName("prenom");
+        person.setLastName("nom");
+
         mockMvc.perform(MockMvcRequestBuilders.post("/medicalrecord")
                 .content(
-                        "{ \"firstName\": \"prenom\", \"lastName\": \"nom\", \"birthdate\": \"01-01-2000\", \"medications\": [], \"allergies\": [] }")
+                        "{ \"firstName\": \"prenom\", \"lastName\": \"nom\", \"birthdate\": \"01/01/2000\", \"medications\": [], \"allergies\": [] }")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andDo(MockMvcResultHandlers.print());
@@ -55,6 +57,9 @@ public class MedicalRecordTests {
 
     @Test
     void put() throws Exception {
+
+        person.setFirstName("firstName1");
+        person.setLastName("lastName1");
 
         mockMvc.perform(MockMvcRequestBuilders.put("/medicalrecord")
                 .content(
@@ -69,6 +74,9 @@ public class MedicalRecordTests {
 
     @Test
     void delete() throws Exception {
+
+        person.setFirstName("firstName1");
+        person.setLastName("lastName1");
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/medicalrecord")
                 .content(

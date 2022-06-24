@@ -7,19 +7,19 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.safetynet.DTO.PersonsbyFirestationsDTO;
-import com.example.safetynet.config.exceptions.RessourceNotFoundException;
-import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
-import com.example.safetynet.model.Person;
-import com.example.safetynet.service.PersonsbyFirestationService;
-import com.example.safetynet.service.SortDataService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
+import com.example.safetynet.dtobjects.PersonsbyFirestationsDTO;
+import com.example.safetynet.model.Person;
+import com.example.safetynet.service.PersonsbyFirestationService;
+import com.example.safetynet.service.SortDataService;
 
 import nl.altindag.log.LogCaptor;
 

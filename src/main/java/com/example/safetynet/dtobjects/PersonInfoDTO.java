@@ -1,12 +1,14 @@
-package com.example.safetynet.DTO;
+package com.example.safetynet.dtobjects;
 
 import java.util.List;
 
-public class PersonMedicalInfoDTO {
+public class PersonInfoDTO {
+
     String firstname;
     String lastname;
-    String phone;
+    String address;
     int age;
+    String email;
 
     List<String> medications;
     List<String> allergies;
@@ -27,12 +29,12 @@ public class PersonMedicalInfoDTO {
         this.lastname = lastname;
     }
 
-    public String getPhone() {
-        return this.phone;
+    public String getAddress() {
+        return this.address;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getAge() {
@@ -41,6 +43,14 @@ public class PersonMedicalInfoDTO {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<String> getMedications() {

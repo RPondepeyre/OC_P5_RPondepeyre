@@ -3,14 +3,14 @@ package com.example.safetynet.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.safetynet.DTO.FireAddressDTO;
-import com.example.safetynet.DTO.PersonMedicalInfoDTO;
-import com.example.safetynet.config.exceptions.RessourceNotFoundException;
-import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
-import com.example.safetynet.model.Person;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.safetynet.config.exceptions.RessourceNotFoundException;
+import com.example.safetynet.config.exceptions.TooManyRessourcesFoundException;
+import com.example.safetynet.dtobjects.FireAddressDTO;
+import com.example.safetynet.dtobjects.PersonMedicalInfoDTO;
+import com.example.safetynet.model.Person;
 
 @Service
 public class FireAddressService {
